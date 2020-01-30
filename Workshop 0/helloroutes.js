@@ -3,11 +3,21 @@ const port = 8080;
 
 http.createServer((request, response) => {
 
-    if (request.url === "/helloworld") {
+    if (request.url === "/") {
         // Send the HTTP header. HTTP Status: 200 = OK
         // Content Type: text/plain
         response.writeHead(200, { 'Content-Type': 'text/plain' });
-        // Message from /helloworld -route
+        // Tuukka's message
+        response.write('Tuukka\'s message!\n\n');
+        // Send the response body as "Hello World"
+        response.end('Hello World');
+    }
+
+    else if (request.url === "/helloroutes") {
+        // Send the HTTP header. HTTP Status: 200 = OK
+        // Content Type: text/plain
+        response.writeHead(200, { 'Content-Type': 'text/plain' });
+        // Message from /helloroutes
         response.write('ASD\'s message!\n\n');
         response.end('Hello ROUTES!');
     }
@@ -16,19 +26,9 @@ http.createServer((request, response) => {
         // Send the HTTP header. HTTP Status: 200 = OK
         // Content Type: text/plain
         response.writeHead(200, { 'Content-Type': 'text/plain' });
-        // Message from /test -route
+        // Message from /test
         response.write('TEST\'s message!\n\n');
         response.end('Hello TEST!');
-    }
-
-    else if (request.url === "/") {
-        // Send the HTTP header. HTTP Status: 200 = OK
-        // Content Type: text/plain
-        response.writeHead(200, { 'Content-Type': 'text/plain' });
-        // Tuukka's message
-        response.write('Tuukka\'s message!\n\n');
-        // Send the response body as "Hello World"
-        response.end('Hello World');
     }
 
 }).listen(port);
