@@ -12,6 +12,15 @@ http.createServer((request, response) => {
         response.end('Hello ROUTES!');
     }
 
+    else if (request.url === "/test") {
+        // Send the HTTP header. HTTP Status: 200 = OK
+        // Content Type: text/plain
+        response.writeHead(200, { 'Content-Type': 'text/plain' });
+        // Message from /test -route
+        response.write('TEST\'s message!\n\n');
+        response.end('Hello TEST!');
+    }
+
     else if (request.url === "/") {
         // Send the HTTP header. HTTP Status: 200 = OK
         // Content Type: text/plain
