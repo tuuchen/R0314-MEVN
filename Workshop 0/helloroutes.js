@@ -7,20 +7,19 @@ http.createServer((request, response) => {
         // Send the HTTP header. HTTP Status: 200 = OK
         // Content Type: text/plain
         response.writeHead(200, { 'Content-Type': 'text/plain' });
-        // Tuukka message
-        response.write('Tuukka\'s message!\n\n');
-        // Send the response body as "Hello World"
-        response.end('Hello World');
+        // Message from /helloworld -route
+        response.write('ASD\'s message!\n\n');
+        response.end('Hello ROUTES!');
     }
 
     else if (request.url === "/") {
         // Send the HTTP header. HTTP Status: 200 = OK
         // Content Type: text/plain
         response.writeHead(200, { 'Content-Type': 'text/plain' });
-        // Tuukka message
-        response.write('ASD\'s message!\n\n');
+        // Tuukka's message
+        response.write('Tuukka\'s message!\n\n');
         // Send the response body as "Hello World"
-        response.end('Hello ROUTES!');
+        response.end('Hello World');
     }
 
 }).listen(port);
