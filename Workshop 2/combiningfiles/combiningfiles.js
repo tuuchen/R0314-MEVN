@@ -8,13 +8,15 @@ console.log("Program started");
 var data = fs.readFileSync('first.txt');
 data += ' ' + fs.readFileSync('second.txt');
 
-// Write "I wrote this to the beginning and the end of file"
+// Write "I wrote this!" to the beginning and the end of file
+
+// Start with "I wrote this!"
 fs.writeFileSync('third.txt', 'I wrote this! ');
 
-// Append data to the middle
+// Append first.txt and second.txt after the text that has already been written to third.txt
 fs.appendFileSync('third.txt', data);
 
-// And to end
+// And add "I wrote this!" to the end
 fs.appendFileSync('third.txt', ' I wrote this!');
 
 // Output result

@@ -14,7 +14,7 @@ fs.writeFileSync('file-one.txt', 'I wrote this!', (err) => {
 
 fs.writeFileSync('file-two.txt', 'I also wrote this!', (err) => {
     if (err) throw err;
-    console.log('File two is here');
+    console.log('File two is here!');
 });
 
 // Delete the first one
@@ -35,7 +35,7 @@ fs.writeFile('my-first-file.txt', 'I wrote this!', (err) => {
 
 fs.writeFile('my-second-file.txt', 'I also wrote this!', (err) => {
     if (err) throw err;
-    console.log('File two is here');
+    console.log('File two is here!');
 });
 
 // Delete the first one
