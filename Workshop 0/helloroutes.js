@@ -35,5 +35,3 @@ http.createServer((request, response) => {
 
 // Console will print the message
 console.log('Server running at http://127.0.0.1:8080');
-
-// Testing VSCode git clone/git push

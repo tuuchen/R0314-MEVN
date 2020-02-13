@@ -1,2 +1,3 @@
 # R0314-MEVN
-R0314 Web development with MEVN, spring 2020
+
+R0314 Web development with MEVN (Mongo, Express, Vue, Node), spring 2020
