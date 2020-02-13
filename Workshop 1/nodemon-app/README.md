@@ -1,3 +1,7 @@
-## Basic express app with Nodemon
+## Workshop 1: VSCode, GitHub integration and Nodemon
 
-Added nodemon-start script to run app with nodemon when launchin from it
+After completing this workshop I learned how to:
+
+- Use Visual Studio Code to edit and debug files
+- Integrate editor to GitHub and pull/push code from it
+- Use Nodemon –command line tool to run the programs

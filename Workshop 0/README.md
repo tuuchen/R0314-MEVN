@@ -1,6 +1,6 @@
-## Workshop 1, introduction to Node.js
+## Workshop 0, introduction to Node.js
 
-After completing this workshop the student is knows how to:
+After completing this workshop I learned how to:
 
 - Write a simple HelloWorld –program in Node.js
 - Run Node.js on a local computer
