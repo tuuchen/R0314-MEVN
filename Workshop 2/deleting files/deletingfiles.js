@@ -7,41 +7,35 @@ console.log("Program started");
 
 // Create some files
 
-fs.writeFileSync('file-one.txt', 'I wrote this!', (err) => {
-    if (err) throw err;
-    console.log('File one is here!');
-});
+fs.writeFileSync('first-sync-file.txt', 'I wrote this!');
+console.log('Sync: My first sync file is here!');
 
-fs.writeFileSync('file-two.txt', 'I also wrote this!', (err) => {
-    if (err) throw err;
-    console.log('File two is here!');
-});
+fs.writeFileSync('second-sync-file.txt', 'I also wrote this!');
+console.log('Sync: My second sync file is here!');
 
 // Delete the first one
-fs.unlinkSync('file-one.txt', (err) => {
-    if (err) throw err;
-    console.log('file-one.txt was deleted');
-});
+fs.unlinkSync('second-sync-file.txt');
+console.log('Sync: first sync file was deleted!');
 
 /* Without Sync, the methods are asynchronous and the code is moving to another block before waiting it to finish, quote:
 When you execute something asynchronously, you can move on to another task before it finishes. */
 
 // Create some files
 
-fs.writeFile('my-first-file.txt', 'I wrote this!', (err) => {
+fs.writeFile('first-async-file.txt', 'I wrote this!', (err) => {
     if (err) throw err;
-    console.log('File one is here!');
+    console.log('Async: My first async file is here!');
 });
 
-fs.writeFile('my-second-file.txt', 'I also wrote this!', (err) => {
+fs.writeFile('second-async-file.txt', 'I also wrote this!', (err) => {
     if (err) throw err;
-    console.log('File two is here!');
+    console.log('Async: My second async file is here!');
 });
 
 // Delete the first one
-fs.unlink('my-first-file.txt', (err) => {
+fs.unlink('first-async-file.txt', (err) => {
     if (err) throw err;
-    console.log('my-first-file was deleted');
+    console.log('Async: My first async was deleted');
 });
 
 console.log("Program ended!");
