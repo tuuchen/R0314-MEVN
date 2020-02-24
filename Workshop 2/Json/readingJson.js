@@ -26,7 +26,7 @@ console.log('Server running at http://127.0.0.1:' + port);
 function logJson () {
 
     // Log first json.
-    var obj = require('./data.json');
+    const obj = require('./data.json');
     console.log("First task:")
     console.log(obj);
 }
