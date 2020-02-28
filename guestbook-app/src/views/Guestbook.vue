@@ -90,18 +90,9 @@ export default {
     }
   },
   mounted () {
-    // Check table state on mount. Get table if there is no table data
-    if (this.$store.state.guestbook.length > 0) {
-      this.items = this.$store.state.guestbook
-      this.isBusy = false
-    } else {
-      axios.getGuestBook()
-        .then(res => {
-          this.$store.state.guestbook = res.data
-          this.items = res.data
-          this.isBusy = false
-        })
-    }
+    // Init table on mount
+    this.items = this.$store.state.guestbook
+    this.isBusy = false
   }
 }
 </script>

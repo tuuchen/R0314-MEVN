@@ -52,10 +52,15 @@ export default {
       evt.preventDefault()
       this.form.id = (this.$store.state.guestbook.length + 1).toString();
       this.form.date = new Date().toString()
+      // Send data to backend
       axios.postForm(JSON.stringify(this.form))
       axios.postAjax(JSON.stringify(this.form)).then(res =>
         this.submittedForm = res.data)
-      this.$store.state.guestbook = ''
+      // Update table
+      axios.getGuestBook()
+        .then(res => {
+          this.$store.state.guestbook = res.data
+        })
       this.resetForm()
     },
     onReset (evt) {
