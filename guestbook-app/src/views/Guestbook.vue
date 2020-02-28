@@ -1,27 +1,29 @@
 <template>
   <div>
-    <div class='table'>
+    <div class="table">
       <!-- Table -->
-      <b-table
-        @row-selected='onRowSelected'
-        selectable
-        select-mode='single'
-        :busy.sync='isBusy'
-        hover
-        head-variant='light'
-        :items='guestbook'
-        :fields='fields'
-      >
-        <!-- Loading table -->
-        <template v-slot:table-busy>
-          <div class='text-center text-danger my-2'>
-            <b-spinner class='align-middle'></b-spinner>
-            <strong>Loading...</strong>
-          </div>
-        </template>
-      </b-table>
       <b-container>
-        <b-button :variant='deleteBtnColor' class='mt-3' size='sm' @click='deleteRow'>Delete row</b-button>
+        <b-table
+          @row-selected="onRowSelected"
+          selectable
+          select-mode="single"
+          :busy.sync="isBusy"
+          hover
+          head-variant="light"
+          :items="guestbook"
+          :fields="fields"
+        >
+          <!-- Loading table -->
+          <template v-slot:table-busy>
+            <div class="text-center text-danger my-2">
+              <b-spinner class="align-middle"></b-spinner>
+              <strong>Loading...</strong>
+            </div>
+          </template>
+        </b-table>
+      </b-container>
+      <b-container>
+        <b-button :variant="deleteBtnColor" class="my-3" size="sm" @click="deleteRow">Delete row</b-button>
       </b-container>
     </div>
   </div>

@@ -1,13 +1,15 @@
 <template>
   <div class="home">
-    <!-- Show loading if image is not loaded -->
-    <div v-show="!isLoaded">
-      <b-spinner variant="success" label="Spinning"></b-spinner>
-    </div>
-    <div v-show="isLoaded">
-      <img alt="Vue logo" src="../assets/express.png" @load="onImgLoad" />
-    </div>
-    <HelloWorld msg="Welcome to Vue.js Express app" />
+    <b-container>
+      <!-- Show loading if image is not loaded -->
+      <div v-show="!isLoaded">
+        <b-spinner variant="success" label="Spinning"></b-spinner>
+      </div>
+      <div v-show="isLoaded">
+        <img alt="Vue logo" src="../assets/express.png" @load="onImgLoad" />
+      </div>
+      <HelloWorld msg="Welcome to Vue.js Express app" />
+    </b-container>
   </div>
 </template>
 
