@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // Initialize axios and set options and correct headers
 const AXIOS = axios.create({
-    baseURL: 'http://localhost:8081',
+    baseURL: '',
     timeout: 5000,
     headers: { 'Content-Type': 'application/json' }
 });
