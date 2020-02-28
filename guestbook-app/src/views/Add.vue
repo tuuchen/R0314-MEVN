@@ -56,15 +56,12 @@ export default {
       // Add ID and date to form
       this.form.id = (this.$store.state.guestbook.length + 1).toString();
       this.form.date = new Date().toString()
-      // Send data to backend
-      axios.postForm(JSON.stringify(this.form))
+      // Send form to backend, and populate guestbook with new data
+      axios.postForm(JSON.stringify(this.form)).then(res =>
+        this.$store.state.guestbook = res.data)
+      // Send form to backend and return it to front
       axios.postAjax(JSON.stringify(this.form)).then(res =>
         this.submittedForm = res.data)
-      // Update table
-      axios.getGuestbook()
-        .then(res => {
-          this.$store.state.guestbook = res.data
-        })
       this.resetForm()
     },
     onReset (evt) {

@@ -18,22 +18,24 @@ app.get('/api/guestbook/', (req, res) => {
     res.send(data);
 });
 
-// Add form data to json
+// Add form data to json and return new data
 app.post('/api/newmessage/', (req, res) => {
     let data = fs.readFileSync('./guestbook.json');
     data = JSON.parse(data);
-    data.push(req.body);
+    let form = req.body
+    data.push(form)
     fs.writeFileSync('./guestbook.json', JSON.stringify(data));
-    res.end();
+    data = fs.readFileSync('./guestbook.json');
+    res.send(data)
 });
 
-// Send form data back to frontend
+// Send submitted form back to frontend
 app.post('/api/ajax/', (req, res) => {
     let data = req.body
     res.send(data)
 });
 
-// Delete data from json by ID
+// Delete data from json by ID and return new data
 app.get('/api/delete/:id', (req, res) => {
     let id = req.params.id
     let data = fs.readFileSync('./guestbook.json');
