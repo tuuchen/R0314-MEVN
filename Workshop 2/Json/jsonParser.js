@@ -1,7 +1,7 @@
 const http = require("http");
 const port = 8080;
 const path = './data.json'
-var obj = require(path);
+const obj = require(path);
 
 // Create server
 http.createServer((req, res) => {
