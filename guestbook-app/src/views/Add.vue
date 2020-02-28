@@ -3,15 +3,16 @@
     <!-- Input form -->
     <b-card title="P1: Guestbook application form" bg-variant="light">
       <b-form @submit="onSubmit" @reset="onReset">
-        <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-          <b-form-input id="input-2" v-model="form.username" required placeholder="Enter name"></b-form-input>
+        <b-form-group id="input-group-1" label="Your Name:" label-for="input-1">
+          <b-form-input id="input-1" v-model="form.username" required placeholder="Enter name"></b-form-input>
         </b-form-group>
         <b-form-group id="input-group-2" label="Your Country:" label-for="input-2">
           <b-form-input id="input-2" v-model="form.country" required placeholder="Enter country"></b-form-input>
         </b-form-group>
-        <b-form-group id="input-group-2" label="Your Message:" label-for="input-2">
+        <b-form-group id="input-group-3" label="Your Message:" label-for="input-3">
           <b-form-textarea
-            id="textarea"
+            label-for="input-3"
+            id="input-2"
             v-model="form.message"
             placeholder="Enter message..."
             rows="3"
@@ -42,14 +43,14 @@ export default {
         date: '',
         message: ''
       },
-      // Ajax form values
+      // Ajax response form values
       submittedForm: '',
     }
   },
   methods: {
-    // Add ID and date to form, then post with Axios
     onSubmit (evt) {
       evt.preventDefault()
+      // Add ID and date to form
       this.form.id = (this.$store.state.guestbook.length + 1).toString();
       this.form.date = new Date().toString()
       // Send data to backend
@@ -57,10 +58,9 @@ export default {
       axios.postAjax(JSON.stringify(this.form)).then(res =>
         this.submittedForm = res.data)
       // Update table
-      axios.getGuestBook()
+      axios.getGuestbook()
         .then(res => {
           this.$store.state.guestbook = res.data
-          localStorage.setItem('guestbook', JSON.stringify(res.data))
         })
       this.resetForm()
     },

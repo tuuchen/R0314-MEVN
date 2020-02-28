@@ -9,7 +9,7 @@ const AXIOS = axios.create({
 
 export default {
     // Get guestbook from backend
-    getGuestBook () {
+    getGuestbook () {
         return AXIOS.get(`/guestbook/`);
     },
     // Post form data to backend

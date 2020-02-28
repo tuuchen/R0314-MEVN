@@ -17,10 +17,9 @@ export default {
   name: 'App',
   mounted () {
     // Load guestbook json data to Vuex when initializing app
-    axios.getGuestBook()
+    axios.getGuestbook()
       .then(res => {
         this.$store.state.guestbook = res.data
-        localStorage.setItem('guestbook', JSON.stringify(res.data))
       })
   }
 }

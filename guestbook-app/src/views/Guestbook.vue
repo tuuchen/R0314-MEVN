@@ -20,14 +20,8 @@
           </div>
         </template>
       </b-table>
-      <!-- <p>
-        Selected Rows:
-        <br />
-        {{ selected }}
-      </p>-->
-      <!-- Delete row btn -->
       <b-container>
-        <b-button :variant="deleteColor" class="mt-3" size="sm" @click="deleteRow">Delete row</b-button>
+        <b-button :variant="deleteBtnColor" class="mt-3" size="sm" @click="deleteRow">Delete row</b-button>
       </b-container>
     </div>
   </div>
@@ -77,14 +71,13 @@ export default {
         axios.deleteRow(row).then(res => {
           this.items = res.data
           this.$store.state.guestbook = res.data
-          localStorage.setItem('guestbook', JSON.stringify(res.data))
         })
       }
     }
   },
   computed: {
     // Delete btn color
-    deleteColor () {
+    deleteBtnColor () {
       if (this.selected.length > 0)
         return 'danger'
       else return null
@@ -92,7 +85,6 @@ export default {
   },
   mounted () {
     // Init table on mount
-    this.$store.state.guestbook = JSON.parse(localStorage.getItem('guestbook'))
     this.items = this.$store.state.guestbook
     this.isBusy = false
   }
