@@ -59,6 +59,7 @@ export default {
     }
   },
   methods: {
+    // Populate "selected" -array with selected items
     onRowSelected (items) {
       this.selected = items
     },
@@ -73,15 +74,17 @@ export default {
     }
   },
   computed: {
-    // Delete btn color
+    // Styling
     deleteBtnColor () {
       if (this.selected.length > 0)
         return 'danger'
       else return null
     },
+    // Return guestbook and populate table
     guestbook () {
       return this.$store.state.guestbook
     },
+    // Return busy-state 
     isBusy () {
       return this.$store.state.busy
     }

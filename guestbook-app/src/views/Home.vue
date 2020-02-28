@@ -26,6 +26,7 @@ export default {
     }
   },
   methods: {
+    // Loaded state
     onImgLoad () {
       this.isLoaded = true
     }
