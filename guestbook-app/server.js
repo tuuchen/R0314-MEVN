@@ -12,14 +12,14 @@ app.use(bodyParser.json());
 app.use('/', serveStatic(path.join(__dirname, '/dist')));
 
 // Load json and send to frontend
-app.get('/guestbook/', (req, res) => {
+app.get('/api/guestbook/', (req, res) => {
     let data = fs.readFileSync('./guestbook.json');
     data = JSON.parse(data);
     res.send(data);
 });
 
 // Add form data to json
-app.post('/newmessage/', (req, res) => {
+app.post('/api/newmessage/', (req, res) => {
     let data = fs.readFileSync('./guestbook.json');
     data = JSON.parse(data);
     data.push(req.body);
@@ -28,13 +28,13 @@ app.post('/newmessage/', (req, res) => {
 });
 
 // Send form data back to frontend
-app.post('/ajax/', (req, res) => {
+app.post('/api/ajax/', (req, res) => {
     let data = req.body
     res.send(data)
 });
 
 // Delete data from json by ID
-app.get('/delete/:id', (req, res) => {
+app.get('/api/delete/:id', (req, res) => {
     let id = req.params.id
     let data = fs.readFileSync('./guestbook.json');
     let json = JSON.parse(data);

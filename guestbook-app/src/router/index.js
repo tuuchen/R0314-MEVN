@@ -20,6 +20,10 @@ const routes = [
     path: '/guestbook',
     name: 'Guestbook',
     component: () => import('../views/Guestbook.vue')
+  },
+  {
+    path: '*',
+    redirect: '/'
   }
 ];
 
