@@ -11,6 +11,7 @@
         </b-form-group>
         <b-form-group id="input-group-3" label="Your Message:" label-for="input-3">
           <b-form-textarea
+            required
             label-for="input-3"
             id="input-2"
             v-model="form.message"
