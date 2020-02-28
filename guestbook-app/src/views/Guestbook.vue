@@ -77,6 +77,7 @@ export default {
         axios.deleteRow(row).then(res => {
           this.items = res.data
           this.$store.state.guestbook = res.data
+          localStorage.setItem('guestbook', JSON.stringify(res.data))
         })
       }
     }
@@ -91,6 +92,7 @@ export default {
   },
   mounted () {
     // Init table on mount
+    this.$store.state.guestbook = JSON.parse(localStorage.getItem('guestbook'))
     this.items = this.$store.state.guestbook
     this.isBusy = false
   }

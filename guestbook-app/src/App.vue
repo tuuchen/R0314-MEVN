@@ -20,6 +20,7 @@ export default {
     axios.getGuestBook()
       .then(res => {
         this.$store.state.guestbook = res.data
+        localStorage.setItem('guestbook', JSON.stringify(res.data))
       })
   }
 }
