@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use('/', serveStatic(path.join(__dirname, '/dist')));
 
 // Load json and send to frontend
-app.get('/api/guestbook/', (req, res) => {
+app.get('/api/guestbook', (req, res) => {
     let data = fs.readFileSync('./guestbook.json');
     data = JSON.parse(data);
     res.send(data);

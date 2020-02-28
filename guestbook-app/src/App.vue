@@ -20,6 +20,7 @@ export default {
     axios.getGuestbook()
       .then(res => {
         this.$store.state.guestbook = res.data
+        this.$store.state.busy = false
       })
   }
 }

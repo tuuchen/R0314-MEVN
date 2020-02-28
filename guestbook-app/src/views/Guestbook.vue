@@ -1,27 +1,27 @@
 <template>
   <div>
-    <div class="table">
+    <div class='table'>
       <!-- Table -->
       <b-table
-        @row-selected="onRowSelected"
+        @row-selected='onRowSelected'
         selectable
-        select-mode="single"
-        :busy.sync="isBusy"
+        select-mode='single'
+        :busy.sync='isBusy'
         hover
-        head-variant="light"
-        :items="items"
-        :fields="fields"
+        head-variant='light'
+        :items='guestbook'
+        :fields='fields'
       >
         <!-- Loading table -->
         <template v-slot:table-busy>
-          <div class="text-center text-danger my-2">
-            <b-spinner class="align-middle"></b-spinner>
+          <div class='text-center text-danger my-2'>
+            <b-spinner class='align-middle'></b-spinner>
             <strong>Loading...</strong>
           </div>
         </template>
       </b-table>
       <b-container>
-        <b-button :variant="deleteBtnColor" class="mt-3" size="sm" @click="deleteRow">Delete row</b-button>
+        <b-button :variant='deleteBtnColor' class='mt-3' size='sm' @click='deleteRow'>Delete row</b-button>
       </b-container>
     </div>
   </div>
@@ -32,9 +32,7 @@ export default {
   name: 'Guestbook',
   data () {
     return {
-      isBusy: true,
       selected: [],
-      items: [],
       // Table fields
       fields: [
         {
@@ -69,7 +67,6 @@ export default {
       if (this.selected.length > 0) {
         var row = this.selected[0].id
         axios.deleteRow(row).then(res => {
-          this.items = res.data
           this.$store.state.guestbook = res.data
         })
       }
@@ -81,12 +78,13 @@ export default {
       if (this.selected.length > 0)
         return 'danger'
       else return null
+    },
+    guestbook () {
+      return this.$store.state.guestbook
+    },
+    isBusy () {
+      return this.$store.state.busy
     }
-  },
-  mounted () {
-    // Init table on mount
-    this.items = this.$store.state.guestbook
-    this.isBusy = false
   }
 }
 </script>
