@@ -1,0 +1,3 @@
+[submodule "guestbook-app"]
+	path = guestbook-app
+	url = https://github.com/tuuchen/R0314-MEVN
