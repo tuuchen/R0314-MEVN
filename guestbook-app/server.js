@@ -36,14 +36,14 @@ app.post('/api/ajax/', (req, res) => {
 });
 
 // Delete data from json by ID and return new data
-app.get('/api/delete/:id', (req, res) => {
+app.delete('/api/delete/:id', (req, res) => {
     let id = req.params.id
     let data = fs.readFileSync('./guestbook.json');
     let json = JSON.parse(data);
     json = json.filter((json) => { return json.id !== id });
     fs.writeFileSync('./guestbook.json', JSON.stringify(json, null, 2));
-    let results = fs.readFileSync('./guestbook.json');
-    res.send(results)
+    data = fs.readFileSync('./guestbook.json');
+    res.send(data)
 });
 
 // this * route is to serve project on different page routes except root `/`

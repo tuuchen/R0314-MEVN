@@ -2,7 +2,7 @@ import axios from 'axios'
 
 // Initialize axios and set options and correct headers
 const AXIOS = axios.create({
-    baseURL: '/api',
+    baseURL: 'http://localhost:8081/api',
     timeout: 5000,
     headers: { 'Content-Type': 'application/json' }
 });
@@ -22,6 +22,6 @@ export default {
     },
     // Send row-id to backend for row-deletion
     deleteRow (id) {
-        return AXIOS.get(`/delete/` + id);
+        return AXIOS.delete(`/delete/` + id);
     }
 };
