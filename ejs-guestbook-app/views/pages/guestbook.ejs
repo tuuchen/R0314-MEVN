@@ -1,0 +1,46 @@
+<html lang="en">
+  <head>
+    <%- include ('../partials/head') %>
+  </head>
+  <body>
+    <header>
+      <%- include ('../partials/header') %>
+    </header>
+    <div class="container">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Country</th>
+            <th>Date</th>
+            <th>Message</th>
+            <th>Option</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach(function(data){ %>
+          <tr>
+            <td><%= data.username %></td>
+            <td><%= data.country %></td>
+            <td><%= data.date %></td>
+            <td><%= data.message %></td>
+            <td>
+              <button onClick="removeUser(<%= data.id %>)">Remove</button>
+            </td>
+          </tr>
+          <% })%>
+        </tbody>
+      </table>
+      <footer>
+        <%- include ('../partials/footer') %>
+      </footer>
+    </div>
+  </body>
+</html>
+<script>
+  function removeUser(id) {
+    fetch('/api/delete/' + id, { method: 'delete' }).then(res => {
+      location.reload();
+    });
+  }
+</script>

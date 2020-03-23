@@ -1,0 +1,59 @@
+<html lang="en">
+  <head>
+    <%- include ('../partials/head') %>
+  </head>
+  <body>
+    <header>
+      <%- include ('../partials/header') %>
+    </header>
+    <div class="container">
+      <form method="post" action="/api/newmessage/">
+        <input style="display: none;" id="id" name="id" />
+        <div class="mb-3">
+          <label for="validationDefault01">Your name:</label>
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            id="validationDefault01"
+            placeholder="Name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="validationDefault02">Your country:</label>
+          <input
+            type="text"
+            name="country"
+            class="form-control"
+            id="validationDefault02"
+            placeholder="Country"
+            required
+          />
+        </div>
+        <input style="display: none;" id="date" name="date" />
+        <div class="mb-3">
+          <label for="validationDefaultUsername">Message:</label>
+          <div class="input-group">
+            <textarea
+              name="message"
+              class="form-control"
+              aria-label="With textarea"
+              placeholder="Message"
+            ></textarea>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">
+          Submit form
+        </button>
+      </form>
+      <footer>
+        <%- include ('../partials/footer') %>
+      </footer>
+    </div>
+  </body>
+</html>
+<script>
+  document.getElementById('date').value = Date();
+  document.getElementById('id').value = <%- data.length+1  %>;
+</script>
