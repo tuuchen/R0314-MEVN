@@ -47,6 +47,29 @@
           Submit form
         </button>
       </form>
+      <div id="ajax">
+        <p>Success!</p>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Country</th>
+              <th>Date</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% data.forEach(function(data){ %>
+            <tr>
+              <td><%= data.username %></td>
+              <td><%= data.country %></td>
+              <td><%= data.date %></td>
+              <td><%= data.message %></td>
+            </tr>
+            <% })%>
+          </tbody>
+        </table>
+      </div>
       <footer>
         <%- include ('../partials/footer') %>
       </footer>
@@ -54,6 +77,9 @@
   </body>
 </html>
 <script>
+  if (<%= data[0].id.length %> == 0) {
+      document.getElementById('ajax').style.display = "none";
+    }
   document.getElementById('date').value = Date();
-  document.getElementById('id').value = <%- data.length+1  %>;
+  document.getElementById('id').value = new Date().getTime();
 </script>

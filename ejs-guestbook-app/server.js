@@ -21,18 +21,19 @@ app.get('/guestbook', (req, res) => {
 
 // Add entry -page
 app.get('/newmessage', (req, res) => {
-    let data = fs.readFileSync('./guestbook.json');
-    data = JSON.parse(data);
+    data = [{ id: '', username: '', country: '', date: '', message: '' }]
     res.render('pages/newmessage', { data });
 });
 
 // Add form data to json and return new data
 app.post('/api/newmessage/', (req, res) => {
-    let data = fs.readFileSync('./guestbook.json');
-    data = JSON.parse(data);
+    let guestbook = fs.readFileSync('./guestbook.json');
+    guestbook = JSON.parse(guestbook);
     let form = req.body
+    guestbook.push(form)
+    data = []
     data.push(form)
-    fs.writeFileSync('./guestbook.json', JSON.stringify(data));
+    fs.writeFileSync('./guestbook.json', JSON.stringify(guestbook));
     res.render('pages/newmessage', { data });
 });
 
