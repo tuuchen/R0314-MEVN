@@ -25,7 +25,13 @@
             <td><%= data.date %></td>
             <td><%= data.message %></td>
             <td>
-              <button onClick="removeUser(<%= data.id %>)">Remove</button>
+              <button
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+                onClick="removeUser(<%= data.id %>)"
+              >
+                Remove
+              </button>
             </td>
           </tr>
           <% })%>
