@@ -99,8 +99,6 @@ export default {
     deleteBtnColor () {
       if (this.selected.length > 0 && this.selected[0].id > 5)
         return 'danger'
-      if (this.selected.length > 0 && this.selected[0].id <= 5)
-        return 'outline-secondary'
       else return 'secondary'
     },
     // Return guestbook and populate table
