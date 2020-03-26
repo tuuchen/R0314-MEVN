@@ -25,7 +25,7 @@
           <b-button type="reset" variant="danger">Reset</b-button>
         </b-form>
         <!-- Form ajax response -->
-        <b-card v-if="submittedForm" class="mt-3" header="Form Data Result">
+        <b-card v-if="submittedForm" class="mt-3" header="Success!">
           <pre class="m-0">{{ submittedForm }}</pre>
         </b-card>
       </b-card>
@@ -54,7 +54,7 @@ export default {
     onSubmit (evt) {
       evt.preventDefault()
       // Add ID and date to form
-      this.form.id = (this.$store.state.guestbook.length + 1).toString();
+      this.form.id = new Date().getTime().toString()
       this.form.date = new Date().toString()
       // Send form to backend, and populate guestbook with new data
       axios.postForm(JSON.stringify(this.form)).then(res =>

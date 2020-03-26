@@ -23,7 +23,20 @@
         </b-table>
       </b-container>
       <b-container>
-        <b-button :variant="deleteBtnColor" class="my-3" size="sm" @click="deleteRow">Delete row</b-button>
+        <b-button
+          v-if="!this.btn"
+          disabled
+          :variant="deleteBtnColor"
+          class="my-3"
+          size="sm"
+        >Delete row</b-button>
+        <b-button
+          v-if="this.btn"
+          :variant="deleteBtnColor"
+          class="my-3"
+          size="sm"
+          @click="deleteRow"
+        >Delete row</b-button>
       </b-container>
     </div>
   </div>
@@ -34,6 +47,7 @@ export default {
   name: 'Guestbook',
   data () {
     return {
+      btn: true,
       selected: [],
       // Table fields
       fields: [
@@ -64,10 +78,15 @@ export default {
     // Populate "selected" -array with selected items
     onRowSelected (items) {
       this.selected = items
+      if (this.selected.length > 0 && this.selected[0].id <= 5) {
+        this.btn = false
+      } else {
+        this.btn = true
+      }
     },
     deleteRow () {
       // If row is selected, send row id to backend with axios, return response and update table 
-      if (this.selected.length > 0) {
+      if (this.selected.length > 0 && this.selected[0].id > 5) {
         var row = this.selected[0].id
         axios.deleteRow(row).then(res => {
           this.$store.state.guestbook = res.data
@@ -78,9 +97,11 @@ export default {
   computed: {
     // Styling
     deleteBtnColor () {
-      if (this.selected.length > 0)
+      if (this.selected.length > 0 && this.selected[0].id > 5)
         return 'danger'
-      else return null
+      if (this.selected.length > 0 && this.selected[0].id <= 5)
+        return 'outline-secondary'
+      else return 'secondary'
     },
     // Return guestbook and populate table
     guestbook () {
