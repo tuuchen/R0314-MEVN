@@ -24,6 +24,7 @@
             <td><%= data.country %></td>
             <td><%= data.date %></td>
             <td><%= data.message %></td>
+            <% if(data.id > 5){ %>
             <td>
               <button
                 type="button"
@@ -33,6 +34,19 @@
                 Remove
               </button>
             </td>
+            <% } else { %>
+            <td>
+              <button
+                type="button"
+                style="cursor: default"
+                class="btn btn-outline-secondary btn-sm"
+                disabled
+                title="Can't remove this!"
+              >
+                Remove
+              </button>
+            </td>
+            <% } %>
           </tr>
           <% })%>
         </tbody>
