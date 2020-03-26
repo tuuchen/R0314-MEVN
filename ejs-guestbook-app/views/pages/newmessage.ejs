@@ -7,7 +7,12 @@
       <%- include ('../partials/header') %>
     </header>
     <div class="container">
-      <form method="post" action="/api/newmessage/">
+      <form
+        class="container"
+        style="max-width: 40rem;"
+        method="post"
+        action="/api/newmessage/"
+      >
         <input style="display: none;" id="id" name="id" />
         <div class="mb-3">
           <label for="validationDefault01">Your name:</label>
