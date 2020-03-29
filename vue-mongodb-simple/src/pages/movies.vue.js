@@ -2,8 +2,8 @@ var Movies = Vue.component("Movies", {
 	template: `<div>
 	<h1 style="text-align: center">MongoDB movie finder</h1>
 	<div>
-	<b-input-group prepend="Movie title" class="my-5">
-    <b-form-input v-model="input" @keyup.enter="getData(input)"></b-form-input>
+	<b-input-group :prepend="$store.state.label" class="my-5">
+    <b-form-input placeholder="Waiting for input.." v-model="input" @keyup.enter="getData(input)"></b-form-input>
     <b-input-group-append>
       <b-button @click="getData(input)" variant="outline-primary">Search</b-button>
     </b-input-group-append>
@@ -68,10 +68,13 @@ var Movies = Vue.component("Movies", {
 					return res.json()
 				}).then(data => {
 					if (data.length > 0) {
+						this.$store.state.label = this.input
 						this.$store.state.items = data
 						this.$store.state.currentPage = 1
 						this.paginate(this.perPage, 0)
+						this.input = ''
 					} else {
+						this.input = ''
 						alert("No results!")
 					}
 				})

@@ -34,7 +34,7 @@ function getResult (query, callback) {
     };
 
     client.connect(err => {
-        console.log(query)
+        // console.log(query)
         const collection = client.db("sample_mflix").collection("movies");
         if (err) throw err;
 
