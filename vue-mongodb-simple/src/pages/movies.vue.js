@@ -31,7 +31,13 @@ var Movies = Vue.component("Movies", {
 	</b-card> 
   </div>
   <div>
-  <b-pagination v-if="items.length > 0" class="my-5" align="center" @change="onPageChanged" :total-rows="rows" :per-page="perPage" v-model="$store.state.currentPage"/>
+  <b-pagination v-if="items.length > 0" 
+  class="my-5" 
+  align="center" 
+  @change="onPageChanged" 
+  :total-rows="rows" 
+  :per-page="perPage" 
+  v-model="$store.state.currentPage"/>
 </div>
 </div>`,
 	data () {
