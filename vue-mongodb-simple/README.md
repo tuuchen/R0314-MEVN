@@ -1,6 +1,6 @@
 # Vue.js with CDN + Node.js + MongoDB
 
-## Find movies from MongoDB sample data (sample_mflix)
+## Search movies from MongoDB sample data (sample_mflix)
 
 ### Rehearsing skills on
 

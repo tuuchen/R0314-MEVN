@@ -4,48 +4,48 @@ var Movies = Vue.component('Movies', {
 	style="text-align: center">MongoDB movie finder</h1>
 	<div>
 	<b-input-group :prepend="$store.state.label" class="my-5">
-    	<b-form-input placeholder="Waiting for input.." v-model="input" @keyup.enter="getData(input)"></b-form-input>
-    		<b-input-group-append>
-      			<b-button @click="getData(input)" variant="outline-primary">Search</b-button>
-    		</b-input-group-append>
-  		</b-input-group>
+     <b-form-input placeholder="Waiting for input.." v-model="input" @keyup.enter="getData(input)"></b-form-input>
+      <b-input-group-append>
+       <b-button @click="getData(input)" variant="outline-primary">Search</b-button>
+    	</b-input-group-append>
+  	   </b-input-group>
   	</div>
   	<b-container>
-  		<b-row class="align-items-stretch">
-  			<b-col class="mt-3" md="4" :key="index" v-for="(item, index) in paginatedItems">
-				<b-card
-	  			footer-bg-variant="light"
-	  			bg-variant="primary"
-	  			text-variant="white"
-	  			:header="item.title"
-	  			class="h-100"
-	  			>
-	  				<template v-slot:footer>
-	  					<b-button @click="details(index)" variant="outline-primary">Details</b-button>
-      				</template>
-	  					<b-img v-if="item.poster"
-	  					center
-	  					:src="item.poster"
-	  					height="444"
-	  					width="300"
-	  					blank-color="#ccc"
-	  					fluid
-	  					alt="placeholder"
-						></b-img>
-				</b-card> 
-  			</b-col>
-  		</b-row>
-  </b-container>
+  	 <b-row class="align-items-stretch">
+  	  <b-col class="mt-3" md="4" :key="index" v-for="(item, index) in paginatedItems">
+		<b-card
+	  	footer-bg-variant="light"
+	  	bg-variant="primary"
+	  	text-variant="white"
+	  	:header="item.title"
+	  	class="h-100"
+	  	>
+	  	 <template v-slot:footer>
+	  	  <b-button @click="details(index)" variant="outline-primary">Details</b-button>
+      	 </template>
+	  	<b-img v-if="item.poster"
+	  	center
+	  	:src="item.poster"
+	  	height="444"
+	  	width="300"
+	  	blank-color="#ccc"
+	  	fluid
+	  	alt="placeholder"
+		></b-img>
+		</b-card> 
+  	 </b-col>
+    </b-row>
+    </b-container>
   	<div>
-  		<b-pagination v-if="items.length > 0" 
-  		class="my-5" 
-  		align="center" 
-  		@change="onPageChanged" 
-  		:total-rows="rows" 
-  		:per-page="perPage" 
-  		first-number
-  		last-number
-  		v-model="$store.state.currentPage"/>
+  	 <b-pagination v-if="items.length > 0" 
+  	  class="my-5" 
+  	  align="center" 
+  	  @change="onPageChanged" 
+      :total-rows="rows" 
+  	  :per-page="perPage" 
+  	  first-number
+  	  last-number
+  	  v-model="$store.state.currentPage"/>
   	</div>
 </div>`,
 	data () {
