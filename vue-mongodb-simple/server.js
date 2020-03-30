@@ -44,7 +44,7 @@ function getResult (query, callback) {
             .sort({ year: -1 })
             .toArray(function (err, result) {
                 if (err) throw err;
-                // console.log(result);
+                console.log(result);
                 client.close();
                 callback(err, result);
             });

@@ -49,12 +49,14 @@
 
     <!-- Vue Pages -->
     <script src="pages/movies.vue.js"></script>
+    <script src="pages/details.vue.js"></script>
     <script src="pages/add.vue.js"></script>
     <script src="pages/disabled.vue.js"></script>
 
     <script>
       var routes = [
         { path: '/', component: Movies },
+        { path: '/details', component: Details },
         { path: '/add', component: Add },
         { path: '/disabled', component: Disabled }
       ];
@@ -71,8 +73,10 @@
         store: new Vuex.Store({
           state: {
             items: '',
+            details: '',
             label: '',
-            currentPage: 1
+            currentPage: 1,
+            id: ''
           }
         })
       });

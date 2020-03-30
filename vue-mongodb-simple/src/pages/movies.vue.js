@@ -1,6 +1,6 @@
 var Movies = Vue.component("Movies", {
 	template: `<div>
-	<h1 style="text-align: center">MongoDB movie finder</h1>
+	<h1 id="title" style="text-align: center">MongoDB movie finder</h1>
 	<div>
 	<b-input-group :prepend="$store.state.label" class="my-5">
     <b-form-input placeholder="Waiting for input.." v-model="input" @keyup.enter="getData(input)"></b-form-input>
@@ -9,60 +9,32 @@ var Movies = Vue.component("Movies", {
     </b-input-group-append>
   </b-input-group>
   </div>
-  <div style="max-width: 50rem; margin: 0 auto;" :key="index"
-  v-for="(item, index) in paginatedItems">
-	<b-card         
+  <b-container>
+  <b-row class="align-items-stretch">
+  <b-col class="mt-3" md="4" :key="index" v-for="(item, index) in paginatedItems">
+	<b-card
+	  footer-bg-variant="light"
 	  bg-variant="primary"
 	  text-variant="white"
 	  :header="item.title"
+	  class="h-100"
 	  >
-	  <p class="card-text">
-		{{item.fullplot}}
-	  </p>
-	  <b-row>
-	  <b-col sm class="mb-1">
+	  <template v-slot:footer>
+	  <b-button @click="details(index)" variant="outline-primary">Details</b-button>
+      </template>
 	  <b-img v-if="item.poster"
 	  center
 	  :src="item.poster"
 	  height="444"
-	  width="400"
+	  width="300"
 	  blank-color="#ccc"
 	  fluid
 	  alt="placeholder"
 	></b-img>
-	</b-col>
-	<b-col sm>
-	<div class="text-center">
-	<b-row>
-	<b-col>
-	<h5>Genre:</h5>
-	<div v-for="genre in item.genres" :key="index">
-	{{genre}}
-	<div>
-	</b-col>
-	<b-col>
-	<h5>Cast:</h5>
-	<div v-for="cast in item.cast" :key="index">
-	{{cast}}
-	<div>
-	</b-col>
-	</b-row>
-	<b-row class="mt-3">
-	<b-col>
-	<h5>Awards:</h5>
-	<div class="mt-2">{{item.awards.text}}</div>
-	</b-col>
-	<b-col>
-	<h5>IMDB Rating:</h5>
-	<div>Score: {{item.imdb.rating}}</div>
-	<div>Votes: {{item.imdb.votes}}</div>
-	</b-col>
-	</b-row>
-	</div>
-	</b-col>
 	</b-card> 
-	</b-row>
-  </div>
+  </b-col>
+  </b-row>
+  </b-container>
   <div>
   <b-pagination v-if="items.length > 0" 
   class="my-5" 
@@ -73,13 +45,13 @@ var Movies = Vue.component("Movies", {
   first-number
   last-number
   v-model="$store.state.currentPage"/>
-</div>
+  </div>
 </div>`,
 	data () {
 		return {
 			input: '',
 			paginatedItems: '',
-			perPage: 1,
+			perPage: 3,
 		};
 	},
 	mounted () {
@@ -90,12 +62,19 @@ var Movies = Vue.component("Movies", {
 		}
 	},
 	methods: {
+		details (index) {
+			let values = []
+			values.push(this.paginatedItems[index])
+			this.$store.state.details = values
+			this.$router.push('/details')
+		},
 		paginate (page_size, page_number) {
 			let itemsToParse = this.items
 			this.paginatedItems = itemsToParse.slice(page_number * page_size, (page_number + 1) * page_size);
 		},
 		onPageChanged (page) {
 			this.paginate(this.perPage, page - 1)
+			document.getElementById("title").scrollIntoView();
 		},
 		getData (input) {
 			if (input != 0) {
