@@ -1,6 +1,6 @@
 var Details = Vue.component("Details", {
-    template: `<div>
-	<h1 class="text-center mb-3">Details</h1>
+	template: `<div>
+	<h1 id="details-title" class="text-center mb-3">Details</h1>
   <div style="max-width: 50rem; margin: 0 auto;" :key="index"
   v-for="(item, index) in items">
     <b-card
@@ -61,9 +61,12 @@ var Details = Vue.component("Details", {
 	</b-row>
   </div>
 </div>`,
-    computed: {
-        items () {
-            return this.$store.state.details
-        }
-    },
+	mounted () {
+		document.getElementById("details-title").scrollIntoView();
+	},
+	computed: {
+		items () {
+			return this.$store.state.details
+		}
+	},
 });
