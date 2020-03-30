@@ -37,6 +37,8 @@ var Movies = Vue.component("Movies", {
   @change="onPageChanged" 
   :total-rows="rows" 
   :per-page="perPage" 
+  first-number
+  last-number
   v-model="$store.state.currentPage"/>
 </div>
 </div>`,
