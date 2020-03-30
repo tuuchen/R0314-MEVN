@@ -4,6 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
+require('dotenv').config()
 
 //here we are configuring dist to serve app files
 app.use('/', serveStatic(path.join(__dirname, '/src')));
@@ -22,8 +23,8 @@ app.get(/.*/, function (req, res) {
 
 function getResult (query, callback) {
     const MongoClient = require("mongodb").MongoClient;
-    // URI hidden in Heroku
-    const uri = process.env.MONGO_URI;
+    // URI hidden in Heroku and local .env -file 
+    const uri = process.env.MONGO_URI
     const client = new MongoClient(uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true
