@@ -103,7 +103,7 @@ var Movies = Vue.component("Movies", {
 			return this.$store.state.items.length
 		},
 		pageCount () {
-			let l = this.totalRows,
+			let l = this.rows,
 				s = this.perPage;
 			return Math.floor(l / s);
 		}
