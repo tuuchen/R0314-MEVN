@@ -25,7 +25,7 @@ var Movies = Vue.component('Movies', {
 	  	  <b-button @click="details(index)" variant="outline-primary">Details</b-button>
       	 </template>
 		<b-img v-if="item.poster && !loadingState"
-		id="poster"
+		class="poster"
 	  	center
 	  	:src="item.poster"
 	  	height="444"
@@ -78,13 +78,12 @@ var Movies = Vue.component('Movies', {
 		},
 		paginate (page_size, page_number) {
 			this.loading = true
-			this.error = false
 			let itemsToParse = this.items;
 			this.paginatedItems = itemsToParse.slice(
 				page_number * page_size,
 				(page_number + 1) * page_size
 			);
-			var posts = document.querySelectorAll('#poster');
+			var posts = document.querySelectorAll('.poster');
 			imagesLoaded(posts, () => {
 				this.loading = false
 			});
