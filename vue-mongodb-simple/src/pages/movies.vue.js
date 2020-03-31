@@ -17,21 +17,26 @@ var Movies = Vue.component('Movies', {
 	  	footer-bg-variant="light"
 	  	bg-variant="primary"
 	  	text-variant="white"
-	  	:header="item.title"
+		:header="item.title"
+		style="min-height: 35rem;"
 	  	class="h-100"
 	  	>
 	  	 <template v-slot:footer>
 	  	  <b-button @click="details(index)" variant="outline-primary">Details</b-button>
       	 </template>
-	  	<b-img v-if="item.poster"
+		<b-img v-if="item.poster && !loadingState"
+		id="poster"
 	  	center
 	  	:src="item.poster"
 	  	height="444"
-	  	width="300"
-	  	blank-color="#ccc"
+		width="300"
 	  	fluid
-	  	alt="placeholder"
 		></b-img>
+		<div v-if="loadingState" class="d-flex justify-content-center">
+  			<div class="spinner-border" role="status">
+    		<span class="sr-only">Loading...</span>
+  			</div>
+		</div>
 		</b-card> 
   	 </b-col>
     </b-row>
@@ -50,6 +55,7 @@ var Movies = Vue.component('Movies', {
 </div>`,
 	data () {
 		return {
+			loading: true,
 			input: '',
 			paginatedItems: '',
 			perPage: 3
@@ -70,11 +76,16 @@ var Movies = Vue.component('Movies', {
 			this.$router.push('/details');
 		},
 		paginate (page_size, page_number) {
+			this.loading = true
 			let itemsToParse = this.items;
 			this.paginatedItems = itemsToParse.slice(
 				page_number * page_size,
 				(page_number + 1) * page_size
 			);
+			var posts = document.querySelectorAll('#poster');
+			imagesLoaded(posts, () => {
+				this.loading = false
+			});
 		},
 		onPageChanged (page) {
 			this.paginate(this.perPage, page - 1);
@@ -112,6 +123,9 @@ var Movies = Vue.component('Movies', {
 			let l = this.rows,
 				s = this.perPage;
 			return Math.floor(l / s);
+		},
+		loadingState () {
+			return this.loading
 		}
 	}
 });

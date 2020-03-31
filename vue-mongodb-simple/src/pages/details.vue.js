@@ -21,10 +21,8 @@ var Details = Vue.component('Details', {
 	  				center
 	  				:src="item.poster"
 	  				height="444"
-	  				width="400"
-	  				blank-color="#ccc"
+					width="400"
 	  				fluid
-	  				alt="placeholder"
 					></b-img>
 				</b-col>
 				<b-col sm>
