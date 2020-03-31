@@ -3,8 +3,8 @@ var Movies = Vue.component('Movies', {
 	<h1 id="title" 
 	style="text-align: center">MongoDB movie finder</h1>
 	<div>
-	<b-input-group :prepend="$store.state.label" class="my-5">
-     <b-form-input placeholder="Waiting for input.." v-model="input" @keyup.enter="getData(input)"></b-form-input>
+	<b-input-group prepend="Movie title" class="my-5">
+     <b-form-input v-model="input" @keyup.enter="getData(input)"></b-form-input>
       <b-input-group-append>
        <b-button @click="getData(input)" variant="outline-primary">Search</b-button>
     	</b-input-group-append>
@@ -30,7 +30,8 @@ var Movies = Vue.component('Movies', {
 	  	:src="item.poster"
 	  	height="444"
 		width="300"
-	  	fluid
+		fluid
+		onerror="javascript:this.src=''"
 		></b-img>
 		<div v-if="loadingState" class="d-flex justify-content-center">
   			<div class="spinner-border" role="status">
@@ -77,6 +78,7 @@ var Movies = Vue.component('Movies', {
 		},
 		paginate (page_size, page_number) {
 			this.loading = true
+			this.error = false
 			let itemsToParse = this.items;
 			this.paginatedItems = itemsToParse.slice(
 				page_number * page_size,
@@ -99,13 +101,10 @@ var Movies = Vue.component('Movies', {
 					})
 					.then(data => {
 						if (data.length > 0) {
-							this.$store.state.label = this.input;
 							this.$store.state.items = data;
 							this.$store.state.currentPage = 1;
 							this.paginate(this.perPage, 0);
-							this.input = '';
 						} else {
-							this.input = '';
 							alert('No results!');
 						}
 					});

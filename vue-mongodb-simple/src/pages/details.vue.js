@@ -22,6 +22,7 @@ var Details = Vue.component('Details', {
 	  				:src="item.poster"
 	  				height="444"
 					width="400"
+					onerror="javascript:this.src=''"
 	  				fluid
 					></b-img>
 				</b-col>
