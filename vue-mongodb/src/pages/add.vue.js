@@ -113,8 +113,8 @@ var Add = Vue.component('Add', {
 				method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(this.form)
 			}).then(res => {
 				return res.json();
-			}).then(res => {
-				this.response = res
+			}).then(data => {
+				this.response = data
 			});
 			this.resetForm();
 		},

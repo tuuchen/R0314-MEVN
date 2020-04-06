@@ -1,5 +1,5 @@
 module.exports = {
-    getData: function (query, callback) {
+    getData: function (req, res) {
 
         const MongoClient = require("mongodb").MongoClient;
         // URI hidden in Heroku and local .env -file 
@@ -10,7 +10,7 @@ module.exports = {
         });
 
         var query = {
-            title: new RegExp(query, 'i')
+            title: new RegExp(req, 'i')
         };
 
         client.connect(err => {
@@ -24,12 +24,12 @@ module.exports = {
                     if (err) throw err;
                     // console.log(result);
                     client.close();
-                    callback(err, result);
+                    res(err, result);
                     client.close();
                 });
         });
     },
-    postData: function (movieData, callback) {
+    postData: function (req, res) {
 
         const MongoClient = require("mongodb").MongoClient;
         // URI hidden in Heroku and local .env -file 
@@ -40,16 +40,16 @@ module.exports = {
         });
 
         var query = {
-            title: new RegExp(movieData.title)
+            title: new RegExp(req.title)
         };
 
         var newMovie = {
-            title: movieData.title,
+            title: req.title,
             year: new Date().getFullYear(),
-            genres: [movieData.genres],
-            cast: [movieData.cast],
-            fullplot: movieData.fullplot,
-            poster: movieData.poster
+            genres: [req.genres],
+            cast: [req.cast],
+            fullplot: req.fullplot,
+            poster: req.poster
         };
 
         client.connect(err => {
@@ -68,7 +68,7 @@ module.exports = {
                 .toArray(function (err, result) {
                     if (err) throw err;
                     console.log(result);
-                    callback(err, result);
+                    res(err, result);
                     client.close();
                 });
         });
