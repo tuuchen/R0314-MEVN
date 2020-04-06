@@ -22,8 +22,7 @@ module.exports = {
                 .sort({ year: -1 })
                 .toArray(function (err, result) {
                     if (err) throw err;
-                    // console.log(result);
-                    client.close();
+                    console.log(result);
                     res(err, result);
                     client.close();
                 });
@@ -39,10 +38,6 @@ module.exports = {
             useUnifiedTopology: true
         });
 
-        var query = {
-            title: new RegExp(req.title)
-        };
-
         var newMovie = {
             title: req.title,
             year: new Date().getFullYear(),
@@ -57,20 +52,12 @@ module.exports = {
             if (err) throw err;
 
             collection.insertOne(newMovie, function (err, r) {
-                // How many added, should be (1)
-                console.log(r.insertedCount);
-            });
-
-            collection
-                .find(query)
-                .limit(1)
-                .sort({ _id: -1 })
-                .toArray(function (err, result) {
-                    if (err) throw err;
-                    console.log(result);
-                    res(err, result);
-                    client.close();
-                });
+                console.log(r.insertedCount || err);
+                if (err) throw err;
+                let data = [r.ops[0]]
+                res(err, data);
+                client.close();
+            })
         });
     }
 };
