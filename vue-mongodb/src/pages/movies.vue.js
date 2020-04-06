@@ -77,7 +77,7 @@ var Movies = Vue.component('Movies', {
 			this.$router.push('/details');
 		},
 		paginate (page_size, page_number) {
-			this.loading = true
+			this.loading = true;
 			let itemsToParse = this.items;
 			this.paginatedItems = itemsToParse.slice(
 				page_number * page_size,
@@ -85,7 +85,7 @@ var Movies = Vue.component('Movies', {
 			);
 			var posts = document.querySelectorAll('.poster');
 			imagesLoaded(posts, () => {
-				this.loading = false
+				this.loading = false;
 			});
 		},
 		onPageChanged (page) {
@@ -123,7 +123,7 @@ var Movies = Vue.component('Movies', {
 			return Math.floor(l / s);
 		},
 		loadingState () {
-			return this.loading
+			return this.loading;
 		}
 	}
 });

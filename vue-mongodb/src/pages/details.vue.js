@@ -31,28 +31,29 @@ var Details = Vue.component('Details', {
 				  <b-row>
 					<b-col>
 					 <h5>Genre:</h5>
-					 <div v-for="genre in item.genres" :key="index">
+					 <div v-for="genre in item.genres">
 					 {{genre}}
 					  </div>
 					</b-col>
 					<b-col>
 					 <h5>Cast:</h5>
-					 <div v-for="cast in item.cast" :key="index">
+					 <div v-for="cast in item.cast">
 					 {{cast}}
 					  </div>
 					</b-col>
 				  </b-row>
 				  <b-row class="mt-3">
 				   <b-col>
-					<h5>Awards:</h5>
-					<div class="mt-2">{{item.awards.text}}</div>
+					<h5 v-if="item.awards">Awards:</h5>
+					<div v-if="item.awards" class="mt-2">{{item.awards.text}}</div>
 				   </b-col>
 				   <b-col>
-					<h5>IMDB Rating:</h5>
-					<div>Score: {{item.imdb.rating}}</div>
-					<div>Votes: {{item.imdb.votes}}</div>
+					<h5 v-if="item.imdb">IMDB Rating:</h5>
+					<div v-if="item.imdb">Score: {{item.imdb.rating}}</div>
+					<div v-if="item.imdb">Votes: {{item.imdb.votes}}</div>
 				   </b-col>
 				</b-row>
+				</div>
 			 </b-col>
 		 </b-row>
         </b-card> 
