@@ -2,9 +2,7 @@ module.exports = {
     getData: function (req, res) {
 
         const MongoClient = require("mongodb").MongoClient;
-        // URI hidden in Heroku and local .env -file 
-        const uri = process.env.MONGO_URI
-        const client = new MongoClient(uri, {
+        const client = new MongoClient(process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
@@ -31,9 +29,7 @@ module.exports = {
     postData: function (req, res) {
 
         const MongoClient = require("mongodb").MongoClient;
-        // URI hidden in Heroku and local .env -file 
-        const uri = process.env.MONGO_URI
-        const client = new MongoClient(uri, {
+        const client = new MongoClient(process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
