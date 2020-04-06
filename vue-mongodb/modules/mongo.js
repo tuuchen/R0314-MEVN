@@ -63,7 +63,8 @@ module.exports = {
 
             collection
                 .find(query)
-                .sort({ year: -1 })
+                .limit(1)
+                .sort({ _id: -1 })
                 .toArray(function (err, result) {
                     if (err) throw err;
                     console.log(result);
