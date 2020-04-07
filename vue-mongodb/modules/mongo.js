@@ -18,6 +18,7 @@ module.exports = {
             collection
                 .find(query)
                 .sort({ year: -1 })
+                .limit(6000)
                 .toArray(function (err, result) {
                     if (err) throw err;
                     console.log(result);

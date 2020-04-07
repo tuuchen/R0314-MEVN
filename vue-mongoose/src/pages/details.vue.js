@@ -60,7 +60,11 @@ var Details = Vue.component('Details', {
 	</div>
 </div>`,
 	mounted () {
-		document.getElementById('details-title').scrollIntoView();
+		if (this.items === '') {
+			this.$router.push('/');
+		} else {
+			document.getElementById('details-title').scrollIntoView();
+		}
 	},
 	computed: {
 		items () {

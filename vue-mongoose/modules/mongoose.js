@@ -16,7 +16,7 @@ module.exports = {
         Movie.find(query, function (err, results) {
             console.log(err || results);
             res(err, results);
-        }).sort({ year: -1 });
+        }).sort({ year: -1 }).limit(6000);
 
     },
     postData: function (req, res) {
