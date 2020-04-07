@@ -9,7 +9,12 @@ var Movies = Vue.component('Movies', {
        <b-button @click="getData(input)" variant="outline-primary">Search</b-button>
     	</b-input-group-append>
   	   </b-input-group>
-  	</div>
+	  </div>
+	  <div v-if="this.pageLoad" class="d-flex justify-content-center mb-3">
+	  <b-spinner type="grow" class="mr-3"></b-spinner>
+	  <strong class="mt-1">{{this.getLoadingMessage}}</strong>
+	</div>
+	<div v-else>
   	<b-container>
   	 <b-row class="align-items-stretch">
   	  <b-col class="mt-3" md="4" :key="index" v-for="(item, index) in paginatedItems">
@@ -52,14 +57,17 @@ var Movies = Vue.component('Movies', {
   	  first-number
   	  last-number
   	  v-model="$store.state.currentPage"/>
-  	</div>
+	  </div>
+	  </div>
 </div>`,
 	data () {
 		return {
-			loading: true,
+			pageLoad: false,
+			imageLoad: true,
 			input: '',
 			paginatedItems: '',
-			perPage: 3
+			perPage: 3,
+			loadingMessage: ''
 		};
 	},
 	mounted () {
@@ -77,7 +85,7 @@ var Movies = Vue.component('Movies', {
 			this.$router.push('/details');
 		},
 		paginate (page_size, page_number) {
-			this.loading = true;
+			this.imageLoad = true;
 			let itemsToParse = this.items;
 			this.paginatedItems = itemsToParse.slice(
 				page_number * page_size,
@@ -85,7 +93,7 @@ var Movies = Vue.component('Movies', {
 			);
 			var posts = document.querySelectorAll('.poster');
 			imagesLoaded(posts, () => {
-				this.loading = false;
+				this.imageLoad = false;
 			});
 		},
 		onPageChanged (page) {
@@ -94,6 +102,8 @@ var Movies = Vue.component('Movies', {
 		},
 		getData (input) {
 			if (input != 0) {
+				this.loadingMessage = messages[Math.floor(Math.random() * messages.length)];
+				this.pageLoad = true
 				fetch('/api/search/' + input)
 					.then(res => {
 						return res.json();
@@ -106,9 +116,10 @@ var Movies = Vue.component('Movies', {
 						} else {
 							alert('No results!');
 						}
+						this.pageLoad = false
 					});
 			}
-		}
+		},
 	},
 	computed: {
 		items () {
@@ -123,7 +134,10 @@ var Movies = Vue.component('Movies', {
 			return Math.floor(l / s);
 		},
 		loadingState () {
-			return this.loading;
+			return this.imageLoad;
+		},
+		getLoadingMessage () {
+			return this.loadingMessage;
 		}
 	}
 });

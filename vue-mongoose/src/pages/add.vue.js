@@ -1,3 +1,5 @@
+
+
 var Add = Vue.component('Add', {
 	template: `<div>
 	<b-card bg-variant="light">
