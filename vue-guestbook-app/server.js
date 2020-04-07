@@ -13,20 +13,28 @@ app.use('/', serveStatic(path.join(__dirname, '/dist')));
 
 // Load json and send to frontend
 app.get('/api/guestbook/', (req, res) => {
-    let data = fs.readFileSync('./guestbook.json');
-    data = JSON.parse(data);
-    res.send(data);
+    fs.readFile('./guestbook.json', (err, data) => {
+        if (err) throw err;
+        let obj = JSON.parse(data);
+        res.send(obj);
+    });
 });
 
 // Add form data to json and return new data
 app.post('/api/newmessage/', (req, res) => {
-    let data = fs.readFileSync('./guestbook.json');
-    data = JSON.parse(data);
-    let form = req.body
-    data.push(form)
-    fs.writeFileSync('./guestbook.json', JSON.stringify(data));
-    data = fs.readFileSync('./guestbook.json');
-    res.send(data)
+    fs.readFile('./guestbook.json', (err, data) => {
+        if (err) throw err;
+        let obj = JSON.parse(data);
+        obj.push(req.body);
+        let newObj = JSON.stringify(obj);
+        fs.writeFile('./guestbook.json', newObj, (err) => {
+            if (err) throw err;
+            fs.readFile('./guestbook.json', (err, data) => {
+                if (err) throw err;
+                res.send(data);
+            });
+        });
+    });
 });
 
 // Send submitted form back to frontend
@@ -37,13 +45,20 @@ app.post('/api/ajax/', (req, res) => {
 
 // Delete data from json by ID and return new data
 app.delete('/api/delete/:id', (req, res) => {
-    let id = req.params.id
-    let data = fs.readFileSync('./guestbook.json');
-    let json = JSON.parse(data);
-    json = json.filter((json) => { return json.id !== id });
-    fs.writeFileSync('./guestbook.json', JSON.stringify(json, null, 2));
-    data = fs.readFileSync('./guestbook.json');
-    res.send(data)
+    fs.readFile('./guestbook.json', (err, data) => {
+        if (err) throw err;
+        let id = req.params.id
+        let obj = JSON.parse(data);
+        obj = obj.filter((obj) => { return obj.id !== id });
+        let newObj = JSON.stringify(obj);
+        fs.writeFile('./guestbook.json', newObj, (err) => {
+            if (err) throw err;
+            fs.readFile('./guestbook.json', (err, data) => {
+                if (err) throw err;
+                res.send(data);
+            });
+        });
+    });
 });
 
 // this * route is to serve project on different page routes except root `/`

@@ -14,9 +14,11 @@ app.use('/', serveStatic(path.join(__dirname, '/src')));
 
 // Guestbook -page
 app.get('/guestbook', (req, res) => {
-    let data = fs.readFileSync('./guestbook.json');
-    data = JSON.parse(data);
-    res.render('pages/guestbook', { data });
+    fs.readFile('./guestbook.json', (err, data) => {
+        if (err) throw err;
+        data = JSON.parse(data);
+        res.render('pages/guestbook', { data });
+    });
 });
 
 // Add entry -page
@@ -27,24 +29,32 @@ app.get('/newmessage', (req, res) => {
 
 // Add form data to json and return new data
 app.post('/api/newmessage/', (req, res) => {
-    let guestbook = fs.readFileSync('./guestbook.json');
-    guestbook = JSON.parse(guestbook);
-    let form = req.body
-    guestbook.push(form)
-    data = []
-    data.push(form)
-    fs.writeFileSync('./guestbook.json', JSON.stringify(guestbook));
-    res.render('pages/newmessage', { data });
+    fs.readFile('./guestbook.json', (err, data) => {
+        if (err) throw err;
+        let obj = JSON.parse(data);
+        obj.push(req.body);
+        let newObj = JSON.stringify(obj);
+        fs.writeFile('./guestbook.json', newObj, (err) => {
+            if (err) throw err;
+            data = [req.body];
+            res.render('pages/newmessage', { data });
+        });
+    });
 });
 
 // Delete data from json by ID
 app.delete('/api/delete/:id', (req, res) => {
-    let id = req.params.id
-    let data = fs.readFileSync('./guestbook.json');
-    let json = JSON.parse(data);
-    json = json.filter((json) => { return json.id !== id });
-    fs.writeFileSync('./guestbook.json', JSON.stringify(json, null, 2));
-    res.end();
+    fs.readFile('./guestbook.json', (err, data) => {
+        if (err) throw err;
+        let id = req.params.id
+        let obj = JSON.parse(data);
+        obj = obj.filter((obj) => { return obj.id !== id });
+        let newObj = JSON.stringify(obj);
+        fs.writeFile('./guestbook.json', newObj, (err) => {
+            if (err) throw err;
+            res.end();
+        });
+    });
 });
 
 // Redirect unkown routes to index
