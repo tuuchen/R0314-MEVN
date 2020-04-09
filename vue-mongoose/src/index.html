@@ -25,10 +25,10 @@
     <!-- Load Vue, Vue router and Vuex followed by BootstrapVue -->
 
     <!-- Vue dev -->
-    <!-- script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <!-- Vue prod -->
-    <script src="https://unpkg.com/vue@latest/dist/vue.min.js"></script>
+    <!-- <script src="https://unpkg.com/vue@latest/dist/vue.min.js"></script> -->
     <script src="https://unpkg.com/vue-router"></script>
     <script src="https://unpkg.com/vuex"></script>
     <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
@@ -58,12 +58,14 @@
     <!-- Vue Pages -->
     <script src="pages/movies.vue.js"></script>
     <script src="pages/details.vue.js"></script>
+    <script src="pages/edit.vue.js"></script>
     <script src="pages/add.vue.js"></script>
 
     <script>
       var routes = [
         { path: '/', component: Movies },
         { path: '/details', component: Details },
+        { path: '/edit', component: Edit },
         { path: '/add', component: Add },
       ];
 

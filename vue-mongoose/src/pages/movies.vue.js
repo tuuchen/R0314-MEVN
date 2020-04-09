@@ -71,7 +71,7 @@ var Movies = Vue.component('Movies', {
 		};
 	},
 	mounted () {
-		if (this.items.length == 0) {
+		if (this.items.length === 0) {
 			this.getData('Star Wars');
 		} else {
 			this.paginate(this.perPage, this.$store.state.currentPage - 1);
@@ -79,9 +79,9 @@ var Movies = Vue.component('Movies', {
 	},
 	methods: {
 		details (index) {
-			let values = [];
-			values.push(this.paginatedItems[index]);
+			let values = [this.paginatedItems[index]];
 			this.$store.state.details = values;
+			this.$store.state.editDetails = values;
 			this.$router.push('/details');
 		},
 		paginate (page_size, page_number) {

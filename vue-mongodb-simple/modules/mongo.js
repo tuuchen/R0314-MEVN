@@ -1,5 +1,5 @@
 module.exports = {
-    getData: function (req, res) {
+    getData: function (query, callback) {
 
         const MongoClient = require("mongodb").MongoClient;
         const client = new MongoClient(process.env.MONGO_URI, {
@@ -8,7 +8,7 @@ module.exports = {
         });
 
         var query = {
-            title: new RegExp(req, 'i')
+            title: new RegExp(query, 'i')
         };
 
         client.connect(err => {
@@ -22,12 +22,12 @@ module.exports = {
                 .toArray(function (err, result) {
                     if (err) throw err;
                     console.log(result);
-                    res(err, result);
+                    callback(err, result);
                     client.close();
                 });
         });
     },
-    postData: function (req, res) {
+    postData: function (query, callback) {
 
         const MongoClient = require("mongodb").MongoClient;
         const client = new MongoClient(process.env.MONGO_URI, {
@@ -36,12 +36,12 @@ module.exports = {
         });
 
         var newMovie = {
-            title: req.title,
+            title: query.title,
             year: new Date().getFullYear(),
-            genres: [req.genres],
-            cast: [req.cast],
-            fullplot: req.fullplot,
-            poster: req.poster
+            genres: [query.genres],
+            cast: [query.cast],
+            fullplot: query.fullplot,
+            poster: query.poster
         };
 
         client.connect(err => {
@@ -52,7 +52,7 @@ module.exports = {
                 console.log(r.insertedCount || err);
                 if (err) throw err;
                 let data = [r.ops[0]]
-                res(err, data);
+                callback(err, data);
                 client.close();
             })
         });

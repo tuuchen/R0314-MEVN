@@ -1,44 +1,71 @@
+require('dotenv').config()
 const Movie = require("./movieSchema");
 const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGO_URI, {
+    // dbName: "sample_mflix",
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 module.exports = {
-    getData: function (req, res) {
-
-        mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
+    getData: function (query, callback) {
 
         var query = {
-            title: new RegExp(req, 'i')
+            title: new RegExp(query, 'i')
         };
 
         Movie.find(query, function (err, results) {
             console.log(err || results);
-            res(err, results);
+            callback(err, results);
         }).sort({ year: -1 }).limit(6000);
-
     },
-    postData: function (req, res) {
-
-        mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
+    postData: function (query, callback) {
 
         var newMovie = new Movie({
-            title: req.title,
+            title: query.title,
             year: new Date().getFullYear(),
-            genres: [req.genres],
-            cast: [req.cast],
-            fullplot: req.fullplot,
-            poster: req.poster
+            genres: query.genres,
+            cast: query.cast,
+            fullplot: query.fullplot,
+            poster: query.poster
         });
 
         newMovie.save(function (err, result) {
             console.log(err || result);
             let data = [result];
-            res(err, data);
+            callback(err, data);
+        });
+    },
+    editData: function (query, callback) {
+
+        var editMovie = {
+            title: query.title,
+            genres: query.genres,
+            cast: query.cast,
+            fullplot: query.fullplot,
+            poster: query.poster
+        };
+
+        Movie.findOneAndUpdate({ _id: query._id }, editMovie, { new: true }, function (err, result) {
+            console.log(err || result);
+            let data = [result];
+            callback(err, data);
+        });
+
+    },
+    deleteData: function (query, callback) {
+
+        Movie.findByIdAndDelete(query, function (err, results) {
+            if (err) {
+                console.log(err);
+                callback("Error.", 500);
+            }
+            else {
+                callback("Ok", 200);
+            }
         });
     }
 };

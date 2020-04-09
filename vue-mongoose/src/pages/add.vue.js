@@ -24,7 +24,12 @@ var Add = Vue.component('Add', {
 		  label-align-sm="right"
 		  label-for="nested-genre"
 		>
-		  <b-form-input required v-model="form.genres" id="nested-genre"></b-form-input>
+		<div v-for="(item, index) in form.genres">
+		  <b-form-input class="mt-1" required v-model="form.genres[index]" id="nested-genre"></b-form-input>
+		</div>
+		  <div v-if="getGenres" class="mt-1">
+		  <b-button size="sm" variant="primary" @click="addItems('genre')">add</b-button><b-button size="sm" class="ml-1"variant="dark" @click="removeItems('genre')">remove</b-button>
+		  </div>
 		</b-form-group>
   
 		<b-form-group
@@ -33,7 +38,12 @@ var Add = Vue.component('Add', {
 		  label-align-sm="right"
 		  label-for="nested-cast"
 		>
-		  <b-form-input required v-model="form.cast" id="nested-cast"></b-form-input>
+		<div v-for="(item, index) in form.cast">
+		  <b-form-input required v-model="form.cast[index]" id="nested-cast"></b-form-input>
+		</div>
+		  <div v-if="getCast" class="mt-1">
+		  <b-button size="sm" variant="primary" @click="addItems('cast')">add</b-button><b-button size="sm" class="ml-1"variant="dark" @click="removeItems('cast')">remove</b-button>
+		  </div>
 		</b-form-group>
 
 		<b-form-group
@@ -95,8 +105,8 @@ var Add = Vue.component('Add', {
 		return {
 			form: {
 				title: '',
-				genres: '',
-				cast: '',
+				genres: [''],
+				cast: [''],
 				fullplot: '',
 				poster: '',
 			},
@@ -124,8 +134,8 @@ var Add = Vue.component('Add', {
 		},
 		resetForm () {
 			this.form.title = ''
-			this.form.genres = ''
-			this.form.cast = ''
+			this.form.genres = ['']
+			this.form.cast = ['']
 			this.form.fullplot = ''
 			this.form.poster = ''
 		},
@@ -135,8 +145,35 @@ var Add = Vue.component('Add', {
 			this.$store.state.details = values;
 			this.$router.push('/details');
 		},
+		addItems (option) {
+			if (option === 'genre')
+				this.form.genres.push('')
+			if (option === 'cast')
+				this.form.cast.push('')
+		},
+		removeItems (option) {
+			if (option === 'genre' && this.form.genres.length > 1)
+				this.form.genres.splice(-1, 1)
+			if (option === 'cast' && this.form.cast.length > 1)
+				this.form.cast.splice(-1, 1)
+		}
 	},
 	computed: {
-		// Reserved 
+		getGenres () {
+			var positive = (value) => value.length > 0
+			if (this.form.genres.some(positive) || this.form.genres.length > 1) {
+				return true
+			} else {
+				return false
+			}
+		},
+		getCast () {
+			var positive = (value) => value.length > 0
+			if (this.form.cast.some(positive) || this.form.cast.length > 1) {
+				return true
+			} else {
+				return false
+			}
+		}
 	}
 });
