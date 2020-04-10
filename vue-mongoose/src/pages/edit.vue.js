@@ -11,7 +11,7 @@ var Edit = Vue.component('Edit', {
 	  	header-tag="header"
           ><template v-slot:header>
           <div>Title:</div>
-          <b-form-input required v-model="form.title" :value="form.title" id="nested-title"></b-form-input>
+          <b-form-input required v-model="form.title" id="nested-title"></b-form-input>
         </template>
            <template v-slot:footer>
            <b-button @click="$router.push('/')" variant="primary">Return</b-button>
@@ -40,7 +40,7 @@ var Edit = Vue.component('Edit', {
 				  <b-row>
 					<b-col>
 					 <h5>Genre:</h5>
-                     <div v-for="(genre, index) in item.genres">
+                     <div v-for="(genre, index) in form.genres">
                      <b-form-input class="mt-1" required v-model="form.genres[index]"></b-form-input>
                       </div>
                       <div class="mt-1">
@@ -49,7 +49,7 @@ var Edit = Vue.component('Edit', {
 					</b-col>
 					<b-col>
 					 <h5>Cast:</h5>
-					 <div v-for="(cast, index) in item.cast">
+					 <div v-for="(cast, index) in form.cast">
                      <b-form-input class="mt-1" required v-model="form.cast[index]"></b-form-input>
                       </div>
                       <div class="mt-1">
