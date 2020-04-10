@@ -14,7 +14,7 @@ var Edit = Vue.component('Edit', {
           <b-form-input required v-model="form.title" id="nested-title"></b-form-input>
         </template>
            <template v-slot:footer>
-           <b-button @click="$router.push('/')" variant="primary">Return</b-button>
+           <b-button @click="$router.push('/details')" variant="primary">Return</b-button>
            <b-button type="submit" variant="success">Confirm</b-button>
            <b-button style="float: right;" @click="deleteMovie(form._id)" variant="outline-danger">Delete movie</b-button>
              </template>
