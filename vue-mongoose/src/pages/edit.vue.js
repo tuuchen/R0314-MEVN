@@ -1,8 +1,8 @@
 var Edit = Vue.component('Edit', {
     template: `<div>
-    <h1 id="details-title" class="text-center mb-3">Edit movie</h1>
+    <h1 id="details-title" class="text-center mb-3">Edit details</h1>
     <b-form @submit="onSubmit">
-  	 <div style="max-width: 50rem; margin: 0 auto;" :key="index" v-for="(item, index) in items">
+  	 <div style="max-width: 50rem; margin: 0 auto;" :key="index" v-for="(item, index) in data">
        <b-card
       	footer-bg-variant="light"
       	class="mb-3"         
@@ -14,6 +14,7 @@ var Edit = Vue.component('Edit', {
           <b-form-input required v-model="form.title" :value="form.title" id="nested-title"></b-form-input>
         </template>
            <template v-slot:footer>
+           <b-button @click="$router.push('/')" variant="primary">Return</b-button>
            <b-button type="submit" variant="success">Confirm</b-button>
            <b-button style="float: right;" @click="deleteMovie(form._id)" variant="outline-danger">Delete movie</b-button>
              </template>
@@ -80,6 +81,7 @@ var Edit = Vue.component('Edit', {
 </div>`,
     data () {
         return {
+            data: '',
             form: {
                 title: '',
                 genres: '',
@@ -91,13 +93,16 @@ var Edit = Vue.component('Edit', {
             }
         }
     },
-    mounted () {
+    beforeMount () {
         if (this.items === '') {
             this.$router.push('/');
         } else {
-            this.form = this.$store.state.details[0];
-            document.getElementById('details-title').scrollIntoView();
+            this.data = [...this.$store.state.details]
+            this.form = JSON.parse(JSON.stringify(this.data[0]));
         }
+    },
+    mounted () {
+        document.getElementById('details-title').scrollIntoView();
     },
     methods: {
         onSubmit (evt) {
@@ -108,6 +113,8 @@ var Edit = Vue.component('Edit', {
                 return res.json();
             }).then(data => {
                 this.$store.state.details = data;
+                objIndex = this.$store.state.items.findIndex(obj => obj._id == this.form._id.toString());
+                this.$store.state.items[objIndex] = this.form;
                 this.$router.push('/details');
             });
         },

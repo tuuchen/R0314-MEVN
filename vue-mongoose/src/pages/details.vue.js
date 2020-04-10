@@ -11,7 +11,7 @@ var Details = Vue.component('Details', {
       	>
       	 <template v-slot:footer>
 			<b-button @click="$router.push('/')" variant="outline-primary">Back</b-button>
-			<b-button style="float: right;" @click="$router.push('/edit')" variant="outline-primary">Modify</b-button>
+			<b-button style="float: right;" @click="$router.push('/edit')" variant="outline-primary">Edit</b-button>
       	   </template>
 	  		 <p class="card-text">
 				{{item.fullplot}}

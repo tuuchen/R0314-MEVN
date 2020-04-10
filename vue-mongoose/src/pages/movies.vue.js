@@ -81,7 +81,6 @@ var Movies = Vue.component('Movies', {
 		details (index) {
 			let values = [this.paginatedItems[index]];
 			this.$store.state.details = values;
-			this.$store.state.editDetails = values;
 			this.$router.push('/details');
 		},
 		paginate (page_size, page_number) {
