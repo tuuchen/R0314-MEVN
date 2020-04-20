@@ -36,4 +36,4 @@
 
 
 
-[Live demo in Heroku](https://airbnb-restapi.com/api)
+[Live demo in Heroku](https://airbnb-restapi.herokuapp.com/api/all)
