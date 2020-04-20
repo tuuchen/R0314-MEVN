@@ -4,13 +4,13 @@ const routes = require('./modules/routes');
 const app = express();
 app.use(bodyParser.json());
 
-app.get('/api/getall', routes);
+app.get('/api/all', routes);
 // List all with pagenum
-app.get('/api/getall/page/:page', routes);
+app.get('/api/all/pg/:page', routes);
 // Search ID
 app.get('/api/id/:id', routes);
 // Search keyword
-app.get('/api/keyword/:keyword/page/:page', routes);
+app.get('/api/k/:keyword/pg/:page', routes);
 // Add
 app.post('/api/add', routes);
 // Edit

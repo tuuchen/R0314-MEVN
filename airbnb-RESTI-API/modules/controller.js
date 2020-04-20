@@ -114,7 +114,7 @@ module.exports = {
   },
   // If no page number is given, redirect to first
   redirect: function (req, res) {
-    res.redirect('/api/getall/page/1');
+    res.redirect('/api/all/pg/1');
   },
   // Uknown path: /* Do something here */
   unkownUrl: function (req, res) {
