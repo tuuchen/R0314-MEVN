@@ -112,8 +112,8 @@ module.exports = {
       }
     });
   },
-  // If no page number is given, redirect to first
-  redirectAll: function (req, res) {
+  // Redirect to query /all
+  redirectToAll: function (req, res) {
     res.redirect('/api/all/');
   },
   // Uknown path: /* Do something here */
