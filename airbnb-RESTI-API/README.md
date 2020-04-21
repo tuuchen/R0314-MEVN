@@ -12,10 +12,6 @@
 
 #### API Guide:
 
-### Get all results
-
-/api/all
-
 ### Get all results and filter by page
 
 /api/all`?page=1`  
