@@ -72,29 +72,29 @@ Pagination:
 
 #
 
-### Get result where `[options]` is query parameter and `[keyword]` is search parameter  
+### Get results where `[options]` is query type and `[value]` is query value 
 
-/api/query/`[options]`/`[keyword]`
+/api/query/`[options]`/`[value]`
 
 Optional:
 
-/api/query/`[options]`/`[keyword][sort][paginate][order]` 
+/api/query/`[options]`/`[value][sort][paginate][order]` 
 
 #
 
-### Get result by keyword and filter by page
+### Get results and filter by page
 
 /api/query/`address.country`/`australia?page=1`
 
 #
 
-### Get result by keyword and filter by page, sort by option and price ascending
+### Get results and filter by page, sort by option and price ascending
 
 /api/query/`name`/`villa?page=1&sort=price&order=asc`
 
 #
 
-### Get result by keyword, filter by page and min / max price, sort by option and price ascending
+### Get results, filter by page, min / max price and sort by option and price ascending
 
 /api/query/`name`/`villa?sort=price&min=100&max=500&order=asc&page=2`
 
