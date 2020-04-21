@@ -20,7 +20,6 @@ const airbnbSchema = new mongoose.Schema(
     calendar_last_scraped: { type: Date, default: Date.now },
     first_review: { type: Date, default: Date.now },
     last_review: { type: Date, default: Date.now },
-
     accommodates: { type: Number },
     bedrooms: { type: Number },
     beds: { type: Number },

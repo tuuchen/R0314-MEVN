@@ -42,19 +42,47 @@ module.exports = {
   },
   // Search by keyword
   findKeyword: function (query, callback) {
+    var min = query.minVal || 0;
+    var max = query.maxVal || 9999999999999;
+    var type = query.type;
     var sortValue = 'review_scores.review_scores_rating';
-    var sortOder = -1;
-    sortValue = query.sort;
+    var sortOrder = -1;
+    if (query.sort) {
+      sortValue = query.sort;
+    }
     if (query.orderBy === 'asc') {
-      sortOder = 1;
+      sortOrder = 1;
     }
     var options = {
-      sort: { [sortValue]: sortOder },
+      sort: { [sortValue]: sortOrder },
       page: query.page,
       limit: maxPerPage,
     };
     var query = {
-      name: new RegExp(query.keyword, 'i'),
+      [type]: new RegExp(query.keyword, 'i'),
+      [sortValue]: { $gte: min, $lte: max },
+    };
+    Airbnb.paginate(query, options, function (err, results) {
+      console.log(err, results);
+      callback(err, results);
+    });
+  },
+  // Search by range
+  findRange: function (query, callback) {
+    var min = query.minVal || 0;
+    var max = query.maxVal || 9999999999999;
+    var sortValue = (sortValue = query.sort);
+    var sortOrder = -1;
+    if (query.orderBy === 'asc') {
+      sortOrder = 1;
+    }
+    var options = {
+      sort: { [sortValue]: sortOrder },
+      page: query.page,
+      limit: maxPerPage,
+    };
+    var query = {
+      [sortValue]: { $gte: min, $lte: max },
     };
     Airbnb.paginate(query, options, function (err, results) {
       console.log(err, results);

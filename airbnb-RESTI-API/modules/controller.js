@@ -18,7 +18,7 @@ module.exports = {
       let data = {
         page: req.query.page,
         orderBy: req.query.order,
-        sort: req.query.sort
+        sort: req.query.sort,
       };
       mongo.getData(data, function (err, results) {
         if (err) {
@@ -58,12 +58,47 @@ module.exports = {
       res.status(200).json({ error: noResultError });
     } else {
       let data = {
+        type: req.params.type,
         keyword: req.params.keyword,
         page: req.query.page,
         orderBy: req.query.order,
-        sort: req.query.sort
+        sort: req.query.sort,
+        minVal: req.query.min,
+        maxVal: req.query.max,
       };
       mongo.findKeyword(data, function (err, results) {
+        if (err) {
+          res.status(500).json({ error: internalError });
+        } else if (results.docs.length === 0) {
+          res.status(200).json({ error: noResultError });
+        } else {
+          if (results.totalPages > maxPages) {
+            results.totalPages = maxPages;
+          }
+          if (req.query.page == maxPages) {
+            results.hasNextPage = false;
+            results.nextPage = null;
+          }
+          res.status(200).json(results);
+        }
+      });
+    }
+  },
+  // Search by range
+  searchRange: function (req, res) {
+    var queryMin = req.query.min;
+    var queryMax = req.query.max;
+    if (req.query.page > maxPages || (!queryMin && !queryMax)) {
+      res.status(200).json({ error: noResultError });
+    } else {
+      let data = {
+        page: req.query.page,
+        orderBy: req.query.order,
+        sort: req.params.sort,
+        minVal: queryMin,
+        maxVal: queryMax,
+      };
+      mongo.findRange(data, function (err, results) {
         if (err) {
           res.status(500).json({ error: internalError });
         } else if (results.docs.length === 0) {

@@ -9,7 +9,9 @@ app.get('/api/all', routes);
 // Search ID
 app.get('/api/id/:id', routes);
 // Search keyword
-app.get('/api/q/:keyword', routes);
+app.get('/api/query/:type/:keyword', routes);
+// Search by range
+app.get('/api/range/:sort', routes);
 // Add
 app.post('/api/add', routes);
 // Edit
