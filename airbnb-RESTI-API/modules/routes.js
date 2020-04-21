@@ -3,7 +3,7 @@ const controller = require('./controller');
 const router = express.Router();
 
 // Routes that direct to desired functions
-router.route(['/']).get(controller.redirectToAll);
+router.route(['/', '/api']).get(controller.redirectToAll);
 router.route('/api/all').get(controller.getAll);
 router.route('/api/id/:id').get(controller.searchID);
 router.route('/api/q/:keyword').get(controller.searchKeyword);

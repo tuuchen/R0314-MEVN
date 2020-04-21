@@ -14,11 +14,14 @@
 
 ### Default sorting is by reviews descending.
 
-Sort options: 
+Sorting:
 
 `sort=[option]`
 
+options:
+
 `price`  
+`name`  
 `beds`  
 `accommodates`  
 `bedrooms`  
