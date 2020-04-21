@@ -23,7 +23,7 @@ module.exports = {
       limit: maxPerPage,
     };
     Airbnb.paginate({}, options, function (err, results) {
-      // console.log(err, results);
+      console.log(err, results);
       callback(err, results);
     });
   },
