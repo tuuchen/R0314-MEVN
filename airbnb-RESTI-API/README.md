@@ -10,9 +10,9 @@
 
 #
 
-#### API Guide:
+### API Guide:
 
-### Default sorting is by reviews descending.
+#### Default sorting is by reviews descending.
 
 Sorting:
 
