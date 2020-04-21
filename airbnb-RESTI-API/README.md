@@ -1,6 +1,6 @@
 ## Airbnb (sample data) REST API with MongoDB, using Express and Mongoose
 
-[Live demo in Heroku](https://airbnb-restapi.herokuapp.com/api/all)
+[Live demo in Heroku](https://airbnb-restapi.herokuapp.com)
 
 ### Rehearsing skills on
 
@@ -20,17 +20,25 @@ Sorting:
 
 options:
 
-`price`  
-`name`  
-`beds`  
 `accommodates`  
+`address.country`  
+`address.country_code`  
+`address.street`    
+`address.suburb`  
+`bathrooms` 
 `bedrooms`  
-`number_of_reviews`  
-`bathrooms`   
-`security_deposit`     
-`cleaning_fee`   
-`extra_people`   
+`beds`  
+`cleaning_fee`  
+`extra_people`  
 `guests_included`   
+`minimum_nights`  
+`maximum_nights`  
+`name`  
+`number_of_reviews`    
+`price`  
+`security_deposit`       
+
+
 
 Order by ascending: 
 
