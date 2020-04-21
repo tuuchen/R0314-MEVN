@@ -28,7 +28,6 @@ module.exports = {
       page: query.page,
       limit: maxPerPage,
     };
-    console.log(options);
     Airbnb.paginate({}, options, function (err, results) {
       console.log(err, results);
       callback(err, results);
@@ -57,7 +56,6 @@ module.exports = {
     var query = {
       name: new RegExp(query.keyword, 'i'),
     };
-    console.log(options);
     Airbnb.paginate(query, options, function (err, results) {
       console.log(err, results);
       callback(err, results);
