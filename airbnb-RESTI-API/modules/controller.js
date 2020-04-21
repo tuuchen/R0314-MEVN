@@ -12,10 +12,10 @@ const maxPages = 60;
 module.exports = {
   // Get all
   getAll: function (req, res) {
-    if (req.params.page > maxPages) {
+    if (req.query.page > maxPages) {
       res.status(200).json({ error: noResultError });
     } else {
-      mongo.getData(req.params.page, function (err, results) {
+      mongo.getData(req.query.page, function (err, results) {
         if (err) {
           res.status(500).json({ error: internalError });
         } else if (results.docs.length === 0) {
@@ -24,7 +24,7 @@ module.exports = {
           if (results.totalPages > maxPages) {
             results.totalPages = maxPages;
           }
-          if (req.params.page == maxPages) {
+          if (req.query.page == maxPages) {
             results.hasNextPage = false;
             results.nextPage = null;
           }
@@ -49,13 +49,13 @@ module.exports = {
   },
   // Search by keyword
   searchKeyword: function (req, res) {
-    if (req.params.page > maxPages) {
+    if (req.query.page > maxPages) {
       res.status(200).json({ error: noResultError });
     } else {
       let data = {
         search: {
           keyword: req.params.keyword,
-          page: req.params.page,
+          page: req.query.page,
         },
       };
       mongo.findKeyword(data, function (err, results) {
@@ -67,7 +67,7 @@ module.exports = {
           if (results.totalPages > maxPages) {
             results.totalPages = maxPages;
           }
-          if (req.params.page == maxPages) {
+          if (req.query.page == maxPages) {
             results.hasNextPage = false;
             results.nextPage = null;
           }
@@ -114,12 +114,7 @@ module.exports = {
   },
   // If no page number is given, redirect to first
   redirectAll: function (req, res) {
-    res.redirect('/api/all/pg/1');
-  },
-  // If no page number is given, redirect to first
-  redirectKeyword: function (req, res) {
-    let keyword = req.params.keyword;
-    res.redirect('/api/k/' + keyword + '/pg/1');
+    res.redirect('/api/all/');
   },
   // Uknown path: /* Do something here */
   unkownUrl: function (req, res) {

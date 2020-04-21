@@ -18,7 +18,7 @@
 
 ### Get all results and filter by page
 
-/api/all/pg/`pagenumber`  
+/api/all`?page=1`  
 
 ### Get result by id 
 
@@ -26,11 +26,11 @@
 
 ### Get result by keyword
 
-/api/k/`keyword` 
+/api/q/`keyword` 
 
 ### Get result by keyword and filter by page
 
-/api/k/`keyword`/pg/`pagenumber`  
+/api/q/`keyword?page=1`  
 
 ### Add new item
 
