@@ -17,11 +17,18 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 module.exports = {
   // Get all
   getData: function (query, callback) {
+    var sortValue = 'review_scores.review_scores_rating';
+    var sortOder = -1;
+    sortValue = query.sort;
+    if (query.orderBy === 'asc') {
+      sortOder = 1;
+    }
     var options = {
-      sort: { 'review_scores.review_scores_rating': -1 },
-      page: query,
+      sort: { [sortValue]: sortOder },
+      page: query.page,
       limit: maxPerPage,
     };
+    console.log(options);
     Airbnb.paginate({}, options, function (err, results) {
       console.log(err, results);
       callback(err, results);
@@ -36,14 +43,21 @@ module.exports = {
   },
   // Search by keyword
   findKeyword: function (query, callback) {
+    var sortValue = 'review_scores.review_scores_rating';
+    var sortOder = -1;
+    sortValue = query.sort;
+    if (query.orderBy === 'asc') {
+      sortOder = 1;
+    }
     var options = {
-      sort: { 'review_scores.review_scores_rating': -1 },
-      page: query.search.page,
+      sort: { [sortValue]: sortOder },
+      page: query.page,
       limit: maxPerPage,
     };
     var query = {
-      name: new RegExp(query.search.keyword, 'i'),
+      name: new RegExp(query.keyword, 'i'),
     };
+    console.log(options);
     Airbnb.paginate(query, options, function (err, results) {
       console.log(err, results);
       callback(err, results);

@@ -16,7 +16,7 @@ app.post('/api/add', routes);
 app.put('/api/edit', routes);
 // Delete
 app.delete('/api/delete/:id', routes);
-// Unkown URL error handling
+// Unkown URL / error handling
 app.get(/.*/, routes);
 
 const port = process.env.PORT || 8081;

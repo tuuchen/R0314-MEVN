@@ -15,7 +15,12 @@ module.exports = {
     if (req.query.page > maxPages) {
       res.status(200).json({ error: noResultError });
     } else {
-      mongo.getData(req.query.page, function (err, results) {
+      let data = {
+        page: req.query.page,
+        orderBy: req.query.order,
+        sort: req.query.sort
+      };
+      mongo.getData(data, function (err, results) {
         if (err) {
           res.status(500).json({ error: internalError });
         } else if (results.docs.length === 0) {
@@ -53,10 +58,10 @@ module.exports = {
       res.status(200).json({ error: noResultError });
     } else {
       let data = {
-        search: {
-          keyword: req.params.keyword,
-          page: req.query.page,
-        },
+        keyword: req.params.keyword,
+        page: req.query.page,
+        orderBy: req.query.order,
+        sort: req.query.sort
       };
       mongo.findKeyword(data, function (err, results) {
         if (err) {
