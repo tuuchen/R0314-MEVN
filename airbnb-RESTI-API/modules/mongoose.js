@@ -19,14 +19,16 @@ module.exports = {
   getData: function (query, callback) {
     var sortValue = 'review_scores.review_scores_rating';
     var sortOder = -1;
-    sortValue = query.sort;
+    if (query.sort) {
+      sortValue = query.sort;
+    }
     if (query.orderBy === 'asc') {
       sortOder = 1;
     }
     var options = {
       sort: { [sortValue]: sortOder },
       page: query.page,
-      limit: maxPerPage,
+      limit: 1,
     };
     Airbnb.paginate({}, options, function (err, results) {
       console.log(err, results);
@@ -46,7 +48,11 @@ module.exports = {
     var max = query.maxVal || 9999999999999;
     var type = query.type;
     var sortValue = 'review_scores.review_scores_rating';
+    var filterValue = sortValue;
     var sortOrder = -1;
+    if (query.filter) {
+      filterValue = query.filter;
+    }
     if (query.sort) {
       sortValue = query.sort;
     }
@@ -65,7 +71,7 @@ module.exports = {
     };
     var query = {
       [type]: query.keyword,
-      [sortValue]: { $gte: min, $lte: max },
+      [filterValue]: { $gte: min, $lte: max },
     };
     Airbnb.paginate(query, options, function (err, results) {
       console.log(err, results);
@@ -76,7 +82,7 @@ module.exports = {
   findRange: function (query, callback) {
     var min = query.minVal || 0;
     var max = query.maxVal || 9999999999999;
-    var sortValue = (sortValue = query.sort);
+    var sortValue = query.sort;
     var sortOrder = -1;
     if (query.orderBy === 'asc') {
       sortOrder = 1;

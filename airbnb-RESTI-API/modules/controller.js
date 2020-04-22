@@ -3,7 +3,8 @@ const mongo = require('./mongoose');
 // Custom messages
 const internalError = 'Uh oh! Something totally unexpected happened!';
 const noResultError = 'Uh oh! No results!';
-const urlError = 'URL not found. Try /api for results.';
+const urlError =
+  'Bad URL. Check API guide at https://github.com/tuuchen/R0314-MEVN/blob/master/airbnb-RESTI-API';
 const deleteMsg = 'Item deleted successfully!';
 const addMsg = 'Item added successfully!';
 const editMsg = 'Edit successfull!';
@@ -19,6 +20,9 @@ module.exports = {
         page: req.query.page,
         orderBy: req.query.order,
         sort: req.query.sort,
+        filter: req.query.filter,
+        minVal: req.query.min,
+        maxVal: req.query.max,
       };
       mongo.getData(data, function (err, results) {
         if (err) {
@@ -63,6 +67,7 @@ module.exports = {
         page: req.query.page,
         orderBy: req.query.order,
         sort: req.query.sort,
+        filter: req.query.filter,
         minVal: req.query.min,
         maxVal: req.query.max,
       };
