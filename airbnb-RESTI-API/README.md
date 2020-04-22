@@ -12,7 +12,7 @@
 
 ### API Guide:
 
-### Simple API call
+### Simple dataset
 
 /api/all
 

@@ -28,7 +28,7 @@ module.exports = {
     var options = {
       sort: { [sortValue]: sortOder },
       page: query.page,
-      limit: 1,
+      limit: maxPerPage,
     };
     Airbnb.paginate({}, options, function (err, results) {
       console.log(err, results);
