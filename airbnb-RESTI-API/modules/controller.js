@@ -19,10 +19,7 @@ module.exports = {
       let data = {
         page: req.query.page,
         orderBy: req.query.order,
-        sort: req.query.sort,
-        filter: req.query.filter,
-        minVal: req.query.min,
-        maxVal: req.query.max,
+        sort: req.query.sort
       };
       mongo.getData(data, function (err, results) {
         if (err) {
