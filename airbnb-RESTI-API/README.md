@@ -63,11 +63,11 @@ Pagination:
 
 #
 
-### Get all results and filter by page
+### Get all results and paginate
 
 /api/all`?page=1`
 
-### Get all results and filter by page, sort by option and price ascending
+### Get all results and paginate, sort by option and price ascending
 
 /api/all`?page=1&sort=price&order=asc`
 
@@ -143,19 +143,19 @@ Using `min` and `max` without keyword `filter` defaults to review rating.
 
 #
 
-### Get results and filter by page
+### Get results and paginate
 
 - /api/query/`address.country`/`australia?page=1`
 
-### Get results and filter by page, sort by min review rating of 80
+### Get results and paginate, sort by min review rating of 80
 
 - /api/query/`address.country`/`australia?page=1&min=80`
 
-### Get results and filter by page, sort by price and order by price ascending
+### Get results and paginate, sort by price, order by price ascending
 
 - /api/query/`name`/`villa?page=1&sort=price&order=asc`
 
-### Get results, filter by page, min / max price and sort by price, filter by price range, order by price ascending
+### Get results and paginate, sort by price, filter by price range, order by price ascending
 
 - /api/query/`name`/`villa?sort=price&filter=price&min=100&max=500&order=asc&page=2`
 
