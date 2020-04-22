@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
-var mongoosePaginate = require('mongoose-paginate-v2');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 // Schema for airbnb sample data
 const airbnbSchema = new mongoose.Schema(
   {
-    _id: { type: String },
+    // _id: { type: String },
     listing_url: { type: String },
     name: { type: String },
     summary: { type: String },
@@ -62,11 +62,11 @@ const airbnbSchema = new mongoose.Schema(
       market: { type: String },
       country: { type: String },
       country_code: { type: String },
-      location: {
+      /* location: {
         type: { type: String },
         coordinates: [{ type: Number }, { type: Number }],
         is_location_exact: { type: Boolean },
-      },
+      }, */
     },
     availability: {
       availability_30: { type: Number },

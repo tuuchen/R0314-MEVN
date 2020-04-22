@@ -1,9 +1,6 @@
 require('dotenv').config();
-// Require Schema
 const Airbnb = require('./airbnbSchema');
-// Results per page
-const maxPerPage = 20;
-// Require Mongoose and setup connection
+const service = require('./service');
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI, {
   dbName: 'sample_airbnb',
@@ -17,20 +14,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 module.exports = {
   // Get all
   getData: function (query, callback) {
-    var sortValue = 'review_scores.review_scores_rating';
-    var sortOder = -1;
-    if (query.sort) {
-      sortValue = query.sort;
-    }
-    if (query.orderBy === 'asc') {
-      sortOder = 1;
-    }
-    var options = {
-      sort: { [sortValue]: sortOder },
-      page: query.page,
-      limit: maxPerPage,
-    };
-    Airbnb.paginate({}, options, function (err, results) {
+    const helper = service.queryHelper(query);
+    Airbnb.paginate(helper.search, helper.options, function (err, results) {
       console.log(err, results);
       callback(err, results);
     });
@@ -44,58 +29,8 @@ module.exports = {
   },
   // Search by keyword
   findKeyword: function (query, callback) {
-    var min = query.minVal || 0;
-    var max = query.maxVal || 9999999999999;
-    var type = query.type;
-    var sortValue = 'review_scores.review_scores_rating';
-    var filterValue = sortValue;
-    var sortOrder = -1;
-    if (query.filter) {
-      filterValue = query.filter;
-    }
-    if (query.sort) {
-      sortValue = query.sort;
-    }
-    if (query.orderBy === 'asc') {
-      sortOrder = 1;
-    }
-    if (!isNaN(query.keyword)) {
-      query.keyword = parseInt(query.keyword);
-    } else {
-      query.keyword = new RegExp(query.keyword, 'i');
-    }
-    var options = {
-      sort: { [sortValue]: sortOrder },
-      page: query.page,
-      limit: maxPerPage,
-    };
-    var query = {
-      [type]: query.keyword,
-      [filterValue]: { $gte: min, $lte: max },
-    };
-    Airbnb.paginate(query, options, function (err, results) {
-      console.log(err, results);
-      callback(err, results);
-    });
-  },
-  // Search by range
-  findRange: function (query, callback) {
-    var min = query.minVal || 0;
-    var max = query.maxVal || 9999999999999;
-    var sortValue = query.sort;
-    var sortOrder = -1;
-    if (query.orderBy === 'asc') {
-      sortOrder = 1;
-    }
-    var options = {
-      sort: { [sortValue]: sortOrder },
-      page: query.page,
-      limit: maxPerPage,
-    };
-    var query = {
-      [sortValue]: { $gte: min, $lte: max },
-    };
-    Airbnb.paginate(query, options, function (err, results) {
+    const helper = service.queryHelper(query);
+    Airbnb.paginate(helper.search, helper.options, function (err, results) {
       console.log(err, results);
       callback(err, results);
     });
@@ -103,6 +38,7 @@ module.exports = {
   // Add
   postData: function (query, callback) {
     var newAirbnb = new Airbnb({
+      // _id: mongoose.Types.ObjectId(),
       listing_url: query.url,
       name: query.name,
       summary: query.summary,
@@ -121,11 +57,8 @@ module.exports = {
       maximum_nights: query.max,
       cancellation_policy: query.policy,
     });
-
     newAirbnb.save(function (err, result) {
-      console.log(err, result);
-      let data = [result];
-      callback(err, data);
+      callback(err, result);
     });
   },
   // Edit
@@ -149,15 +82,12 @@ module.exports = {
       maximum_nights: query.max,
       cancellation_policy: query.policy,
     };
-
     Airbnb.findOneAndUpdate(
       { _id: query._id },
       editAirbnb,
       { new: true },
       function (err, result) {
-        console.log(err, result);
-        let data = [result];
-        callback(err, data);
+        callback(err, result);
       }
     );
   },
@@ -165,10 +95,11 @@ module.exports = {
   deleteData: function (query, callback) {
     Airbnb.findByIdAndDelete(query, function (err, results) {
       if (err) {
-        console.log(err);
-        callback('Error', 500);
+        callback(500);
+      } else if (results === null) {
+        callback(404);
       } else {
-        callback('Ok', 200);
+        callback(200);
       }
     });
   },

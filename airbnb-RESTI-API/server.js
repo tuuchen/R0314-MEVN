@@ -2,7 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./modules/routes');
 const app = express();
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+  }));
 
 // List all
 app.get('/api/all', routes);
@@ -10,8 +13,6 @@ app.get('/api/all', routes);
 app.get('/api/id/:id', routes);
 // Search keyword
 app.get('/api/query/:type/:keyword', routes);
-// Search by range
-app.get('/api/range/:sort', routes);
 // Add
 app.post('/api/add', routes);
 // Edit

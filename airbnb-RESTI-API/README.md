@@ -14,7 +14,7 @@
 
 ### Simple dataset
 
-/api/all
+- /api/all
 
 #
 
@@ -61,21 +61,56 @@ Pagination:
 
 `page=[pagenumber]`
 
+### **Filter**
+
+You can also filter by min value, max value, or range.
+
+- `filter=[option]&min=[value]&max=[value]`
+
+Filter options:
+
+`accommodates`  
+`bathrooms`  
+`bedrooms`  
+`beds`  
+`cleaning_fee`  
+`extra_people`  
+`guests_included`  
+`minimum_nights`  
+`maximum_nights`  
+`number_of_reviews`  
+`price`  
+`security_deposit`
+
+### Example:
+
+Price range:
+
+- `filter=price&min=150&max=500`
+
+Filter by maximum price:
+
+- `filter=price&max=150`
+
 #
 
 ### Get all results and paginate
 
-/api/all`?page=1`
+- /api/all`?page=1`
 
-### Get all results and paginate, sort by option and price ascending
+### Get all results and paginate, sort by price and order by price ascending
 
-/api/all`?page=1&sort=price&order=asc`
+- /api/all`?sort=price&order=asc?page=1`
+
+### Get all results, paginate and filter by price
+
+- /api/all`?filter=price&max=400&page=1`
 
 #
 
 ### Get results where `[options]` is query type and `[value]` is query value
 
-| Options                              | Value  |
+| `[options]`                              | `[value]`  |
 | :----------------------------------- | :----: |
 | `accommodates`                       | number |
 | `address.country`                    | string |
@@ -106,95 +141,23 @@ Pagination:
 
 ### Usage:
 
-/api/query/`[options]`/`[value]`
-
-#
-
-### **Filter**
-
-You can also filter by min value, max value, or range.
-
-Filter options:
-
-`accommodates`  
-`bathrooms`  
-`bedrooms`  
-`beds`  
-`cleaning_fee`  
-`extra_people`  
-`guests_included`  
-`minimum_nights`  
-`maximum_nights`  
-`number_of_reviews`  
-`price`  
-`security_deposit`
-
-Price range:
-
--  `filter=price&min=150&max=500`
-
-Filter by maximum price:
-
--  `filter=price&max=150`
-
-Using `min` and `max` without keyword `filter` defaults to review rating. 
-
-- `min=80`  
-
-#
+- /api/query/`[options]`/`[value]`
 
 ### Get results and paginate
 
 - /api/query/`address.country`/`australia?page=1`
 
-### Get results and paginate, sort by min review rating of 80
+### Get results and paginate, filter by max price 100€
 
-- /api/query/`address.country`/`australia?page=1&min=80`
+- /api/query/`address.country`/`australia?filter=price&max=100&page=1`
 
 ### Get results and paginate, sort by price, order by price ascending
 
-- /api/query/`name`/`villa?page=1&sort=price&order=asc`
+- /api/query/`name`/`villa?sort=price&order=asc&page=1`
 
 ### Get results and paginate, sort by price, filter by price range, order by price ascending
 
-- /api/query/`name`/`villa?sort=price&filter=price&min=100&max=500&order=asc&page=2`
-
-#
-
-### Get all results by range
-
-Options:
-
-`accommodates`  
-`bathrooms`  
-`bedrooms`  
-`beds`  
-`cleaning_fee`  
-`extra_people`  
-`guests_included`  
-`minimum_nights`  
-`maximum_nights`  
-`number_of_reviews`  
-`price`  
-`security_deposit`
-
-Minimum value:
-
-`min=[value]`
-
-Maximum value:
-
-`max=[value]`
-
-Examples: 
-
--  /api/range/`[options]?min=[value]&max=[value]`  
-
--  /api/range/`[options]?max=[value]`  
-
-Range with pagination:
-
-- /api/range/`price?min=150&max=300&order=asc&page=2`
+- /api/query/`name`/`villa?sort=price&filter=price&min=100&max=500&order=asc&page=1`
 
 #
 

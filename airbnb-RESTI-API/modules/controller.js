@@ -1,41 +1,17 @@
 const mongo = require('./mongoose');
-
-// Custom messages
-const internalError = 'Uh oh! Something totally unexpected happened!';
-const noResultError = 'Uh oh! No results!';
-const urlError =
-  'Bad URL. Check API guide at https://github.com/tuuchen/R0314-MEVN/blob/master/airbnb-RESTI-API';
-const deleteMsg = 'Item deleted successfully!';
-const addMsg = 'Item added successfully!';
-const editMsg = 'Edit successfull!';
-const maxPages = 60;
+const service = require('./service');
+const messages = require('./messages');
 
 module.exports = {
   // Get all
   getAll: function (req, res) {
-    if (req.query.page > maxPages) {
-      res.status(200).json({ error: noResultError });
+    if (req.query.page > messages.maxPages) {
+      res.status(200).json({ error: messages.noResultError });
     } else {
-      let data = {
-        page: req.query.page,
-        orderBy: req.query.order,
-        sort: req.query.sort
-      };
+      const data = service.paramsHelper(req);
+      data.all = true;
       mongo.getData(data, function (err, results) {
-        if (err) {
-          res.status(500).json({ error: internalError });
-        } else if (results.docs.length === 0) {
-          res.status(200).json({ error: noResultError });
-        } else {
-          if (results.totalPages > maxPages) {
-            results.totalPages = maxPages;
-          }
-          if (req.query.page == maxPages) {
-            results.hasNextPage = false;
-            results.nextPage = null;
-          }
-          res.status(200).json(results);
-        }
+        return service.resHelper(req, res, err, results);
       });
     }
   },
@@ -43,78 +19,17 @@ module.exports = {
   searchID: function (req, res) {
     let id = req.params.id;
     mongo.findByID(id, function (err, results) {
-      console.log(results);
-      if (err) {
-        res.status(500).json({ error: internalError });
-      } else if (results === null || results == undefined) {
-        res.status(200).json({ error: noResultError });
-      } else {
-        res.status(200).json(results);
-      }
+      return service.resHelper(req, res, err, results);
     });
   },
   // Search by keyword
   searchKeyword: function (req, res) {
     if (req.query.page > maxPages) {
-      res.status(200).json({ error: noResultError });
+      res.status(200).json({ error: messages.noResultError });
     } else {
-      let data = {
-        type: req.params.type,
-        keyword: req.params.keyword,
-        page: req.query.page,
-        orderBy: req.query.order,
-        sort: req.query.sort,
-        filter: req.query.filter,
-        minVal: req.query.min,
-        maxVal: req.query.max,
-      };
+      const data = service.paramsHelper(req);
       mongo.findKeyword(data, function (err, results) {
-        if (err) {
-          res.status(500).json({ error: internalError });
-        } else if (results.docs.length === 0) {
-          res.status(200).json({ error: noResultError });
-        } else {
-          if (results.totalPages > maxPages) {
-            results.totalPages = maxPages;
-          }
-          if (req.query.page == maxPages) {
-            results.hasNextPage = false;
-            results.nextPage = null;
-          }
-          res.status(200).json(results);
-        }
-      });
-    }
-  },
-  // Search by range
-  searchRange: function (req, res) {
-    var queryMin = req.query.min;
-    var queryMax = req.query.max;
-    if (req.query.page > maxPages || (!queryMin && !queryMax)) {
-      res.status(200).json({ error: noResultError });
-    } else {
-      let data = {
-        page: req.query.page,
-        orderBy: req.query.order,
-        sort: req.params.sort,
-        minVal: queryMin,
-        maxVal: queryMax,
-      };
-      mongo.findRange(data, function (err, results) {
-        if (err) {
-          res.status(500).json({ error: internalError });
-        } else if (results.docs.length === 0) {
-          res.status(200).json({ error: noResultError });
-        } else {
-          if (results.totalPages > maxPages) {
-            results.totalPages = maxPages;
-          }
-          if (req.query.page == maxPages) {
-            results.hasNextPage = false;
-            results.nextPage = null;
-          }
-          res.status(200).json(results);
-        }
+        return service.resHelper(req, res, err, results);
       });
     }
   },
@@ -122,35 +37,27 @@ module.exports = {
   addAirbnb: function (req, res) {
     let form = req.body;
     mongo.postData(form, function (err, results) {
-      if (err) {
-        res.status(500).json({ error: internalError });
-      } else {
-        res.statusMessage = addMsg;
-        res.status(200).json(results);
-      }
+      return service.resHelper(req, res, err, results);
     });
   },
   // Edit
   editAirbnb: function (req, res) {
     let form = req.body;
     mongo.editData(form, function (err, results) {
-      if (err) {
-        res.status(500).json({ error: internalError });
-      } else {
-        res.statusMessage = editMsg;
-        res.status(200).json(results);
-      }
+      return service.resHelper(req, res, err, results);
     });
   },
   // Delete by ID
   deleteAirbnb: function (req, res) {
     let id = req.params.id;
-    mongo.deleteData(id, function (err, results) {
-      if (err) {
-        res.status(500).json({ error: internalError });
+    mongo.deleteData(id, function (results) {
+      if (results === 404) {
+        res.status(404).json({ error: messages.noResultError });
+      } else if (results === 500) {
+        res.status(500).json({ error: messages.internalError });
       } else {
-        res.statusMessage = deleteMsg;
-        res.status(200).json(results);
+        res.statusMessage = messages.successMsg;
+        res.status(200).json({ ok: messages.successMsg });
       }
     });
   },
@@ -160,6 +67,6 @@ module.exports = {
   },
   // Uknown path: /* Do something here */
   unkownUrl: function (req, res) {
-    res.status(200).json({ error: urlError });
+    res.status(200).json({ error: messages.urlError });
   },
 };
