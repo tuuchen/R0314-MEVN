@@ -53,13 +53,18 @@ module.exports = {
     if (query.orderBy === 'asc') {
       sortOrder = 1;
     }
+    if (!isNaN(query.keyword)) {
+      query.keyword = parseInt(query.keyword);
+    } else {
+      query.keyword = new RegExp(query.keyword, 'i');
+    }
     var options = {
       sort: { [sortValue]: sortOrder },
       page: query.page,
       limit: maxPerPage,
     };
     var query = {
-      [type]: new RegExp(query.keyword, 'i'),
+      [type]: query.keyword,
       [sortValue]: { $gte: min, $lte: max },
     };
     Airbnb.paginate(query, options, function (err, results) {
