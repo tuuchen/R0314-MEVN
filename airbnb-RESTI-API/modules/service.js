@@ -15,6 +15,20 @@ module.exports = {
     };
     return data;
   },
+  docsHelper: function (results) {
+    var data = {
+      docs: [results],
+      totalDocs: null,
+      totalPages: null,
+      page: null,
+      paginCounter: null,
+      hasPrevPage: false,
+      hasNextPage: false,
+      prevPage: null,
+      nextPage: null,
+    };
+    return data;
+  },
   resHelper: function (req, res, err, results) {
     if (err) {
       return res.status(500).json({ error: messages.internalError });
@@ -22,6 +36,7 @@ module.exports = {
       return res.status(200).json({ error: messages.noResultError });
     } else if (
       (results.docs && results.docs.length === 0) ||
+      (results.docs && results.docs[0] === null) ||
       results.length === 0
     ) {
       return res.status(200).json({ error: messages.noResultError });
@@ -38,7 +53,7 @@ module.exports = {
     }
   },
   queryHelper: function (query) {
-    var maxPerPage = 20;
+    var maxPerPage = 1;
     var sortValue = 'review_scores.review_scores_rating';
     var sortOrder = -1;
     var search = {};
@@ -79,6 +94,7 @@ module.exports = {
       sort: { [sortValue]: sortOrder },
       page: query.page,
       limit: maxPerPage,
+      lean: true,
     };
     return {
       search: search,

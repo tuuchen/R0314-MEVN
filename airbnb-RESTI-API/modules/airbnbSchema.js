@@ -4,7 +4,7 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 // Schema for airbnb sample data
 const airbnbSchema = new mongoose.Schema(
   {
-    // _id: { type: String },
+    _id: { type: String },
     listing_url: { type: String },
     name: { type: String },
     summary: { type: String },

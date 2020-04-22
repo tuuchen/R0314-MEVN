@@ -24,7 +24,7 @@ module.exports = {
   },
   // Search by keyword
   searchKeyword: function (req, res) {
-    if (req.query.page > maxPages) {
+    if (req.query.page > messages.maxPages) {
       res.status(200).json({ error: messages.noResultError });
     } else {
       const data = service.paramsHelper(req);

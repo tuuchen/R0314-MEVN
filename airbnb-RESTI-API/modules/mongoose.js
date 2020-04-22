@@ -23,6 +23,7 @@ module.exports = {
   // Search by ID
   findByID: function (query, callback) {
     Airbnb.findById(query, function (err, results) {
+      results = service.docsHelper(results);
       console.log(err, results);
       callback(err, results);
     });
@@ -38,7 +39,7 @@ module.exports = {
   // Add
   postData: function (query, callback) {
     var newAirbnb = new Airbnb({
-      // _id: mongoose.Types.ObjectId(),
+      _id: mongoose.Types.ObjectId(),
       listing_url: query.url,
       name: query.name,
       summary: query.summary,
@@ -57,8 +58,10 @@ module.exports = {
       maximum_nights: query.max,
       cancellation_policy: query.policy,
     });
-    newAirbnb.save(function (err, result) {
-      callback(err, result);
+    newAirbnb.save(function (err, results) {
+      results = service.docsHelper(results);
+      console.log(err, results);
+      callback(err, results);
     });
   },
   // Edit
@@ -86,8 +89,10 @@ module.exports = {
       { _id: query._id },
       editAirbnb,
       { new: true },
-      function (err, result) {
-        callback(err, result);
+      function (err, results) {
+        results = service.docsHelper(results);
+        console.log(err, results);
+        callback(err, results);
       }
     );
   },
