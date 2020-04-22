@@ -53,7 +53,7 @@ module.exports = {
     }
   },
   queryHelper: function (query) {
-    var maxPerPage = 1;
+    var maxPerPage = 20;
     var sortValue = 'review_scores.review_scores_rating';
     var sortOrder = -1;
     var search = {};
