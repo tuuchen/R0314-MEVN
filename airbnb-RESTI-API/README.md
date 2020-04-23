@@ -12,9 +12,9 @@
 
 ### API Guide:
 
-### All results:
+### Simple API-call:
 
-- /api/all + options
+- /api/query/all + options
 
 ### Detailed results:
 
@@ -185,15 +185,15 @@ Example result:
 
 ### Get all results and paginate
 
-- /api/all`?page=1`
+- /api/query/all`?page=1`
 
 ### Get all results and paginate, sort by price and order by price ascending
 
-- /api/all`?sort=price&order=asc?page=1`
+- /api/query/all`?sort=price&order=asc?page=1`
 
 ### Get all results, paginate and filter by price
 
-- /api/all`?filter=price&max=400&page=1`
+- /api/query/all`?filter=price&max=400&page=1`
 
 #
 
@@ -253,11 +253,11 @@ Example result:
 
 Page number:
 
-- `page=[pagenumber]`  
+- `page=[pagenumber]`
 
 Results to show per page:
 
-- `perPage=[value]`  
+- `perPage=[value]`
 
 ### **Filter**
 
@@ -267,7 +267,7 @@ You can also filter by min value, max value, or range.
 
 Filter options for example (numbers):
 
-| `[key]`                          | `[value]` |
+| `[key]`                              | `[value]` |
 | :----------------------------------- | :-------: |
 | `accommodates`                       |  number   |
 | `bathrooms`                          |  number   |
@@ -297,7 +297,7 @@ Filter by maximum price:
 
 Example of numbers:
 
-| `[key]`                          | `[value]` |
+| `[key]`                              | `[value]` |
 | :----------------------------------- | :-------: |
 | `accommodates`                       |  number   |
 | `bathrooms`                          |  number   |
@@ -313,7 +313,7 @@ Example of numbers:
 
 Example of strings:
 
-| `[key]`            | `[value]` |
+| `[key]`                | `[value]` |
 | :--------------------- | :-------: |
 | `address.country`      |  string   |
 | `address.country_code` |  string   |
