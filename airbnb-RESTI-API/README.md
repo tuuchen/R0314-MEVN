@@ -12,9 +12,13 @@
 
 ### API Guide:
 
-### Simple dataset
+### All results:
 
-- /api/all
+- /api/all + options
+
+### Detailed results:
+
+- /api/query/`[key]`/`[value]` + options.
 
 Example result:
 
@@ -179,6 +183,62 @@ Example result:
 
 #
 
+### Get all results and paginate
+
+- /api/all`?page=1`
+
+### Get all results and paginate, sort by price and order by price ascending
+
+- /api/all`?sort=price&order=asc?page=1`
+
+### Get all results, paginate and filter by price
+
+- /api/all`?filter=price&max=400&page=1`
+
+#
+
+### Get results and paginate
+
+- /api/query/`address.country`/`australia?page=1`
+
+### Get results and paginate, filter by max price 100€
+
+- /api/query/`address.country`/`australia?filter=price&max=100&page=1`
+
+### Get results and paginate, sort by price, order by price ascending
+
+- /api/query/`name`/`villa?sort=price&order=asc&page=1`
+
+### Get results and paginate, sort by price, filter by price range, order by price ascending
+
+- /api/query/`name`/`villa?sort=price&filter=price&min=100&max=500&order=asc&page=1`
+
+#
+
+### Get result by id
+
+- /api/id/`id-number`
+
+#
+
+### Add new item
+
+- /api/add
+
+#
+
+### Edit item
+
+- /api/edit
+
+#
+
+### Delete item
+
+- /api/delete/`id-number`
+
+#
+
 ## Default sorting is by review rating (0-100) descending.
 
 ### **Optional sorting**
@@ -233,20 +293,6 @@ Filter by maximum price:
 
 #
 
-### Get all results and paginate
-
-- /api/all`?page=1`
-
-### Get all results and paginate, sort by price and order by price ascending
-
-- /api/all`?sort=price&order=asc?page=1`
-
-### Get all results, paginate and filter by price
-
-- /api/all`?filter=price&max=400&page=1`
-
-#
-
 ### Get results where `[key]` is search type and `[value]` is value to find
 
 Example of numbers:
@@ -284,47 +330,3 @@ Example of strings:
 | `property_type`        |  string   |
 | `room_type`            |  string   |
 | `reviews.comments`     |  string   |
-
-### Usage:
-
-- /api/query/`[key]`/`[value]`
-
-### Get results and paginate
-
-- /api/query/`address.country`/`australia?page=1`
-
-### Get results and paginate, filter by max price 100€
-
-- /api/query/`address.country`/`australia?filter=price&max=100&page=1`
-
-### Get results and paginate, sort by price, order by price ascending
-
-- /api/query/`name`/`villa?sort=price&order=asc&page=1`
-
-### Get results and paginate, sort by price, filter by price range, order by price ascending
-
-- /api/query/`name`/`villa?sort=price&filter=price&min=100&max=500&order=asc&page=1`
-
-#
-
-### Get result by id
-
-- /api/id/`id-number`
-
-#
-
-### Add new item
-
-- /api/add
-
-#
-
-### Edit item
-
-- /api/edit
-
-#
-
-### Delete item
-
-- /api/delete/`id-number`

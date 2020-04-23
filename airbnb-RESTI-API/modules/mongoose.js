@@ -37,7 +37,6 @@ module.exports = {
   postData: function (query, callback) {
     var newAirbnb = new Airbnb({
       _id: mongoose.Types.ObjectId(),
-      bathrooms: query.bathrooms,
       listing_url: query.url,
       name: query.name,
       summary: query.summary,
