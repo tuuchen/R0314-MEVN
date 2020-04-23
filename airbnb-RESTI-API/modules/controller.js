@@ -5,7 +5,7 @@ const messages = require('./messages');
 module.exports = {
   // Get all
   getAll: function (req, res) {
-    // send req data into paramsHelper to construct a query
+    // send req data into paramsHelper to construct route params / queries
     const data = service.paramsHelper(req);
     mongo.getData(data, function (err, results) {
       // construct results / or errors with resHelper
