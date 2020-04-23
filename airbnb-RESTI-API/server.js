@@ -19,7 +19,7 @@ app.post('/api/add', routes);
 // Edit
 app.put('/api/edit', routes);
 // Delete
-app.delete('/api/delete/', routes);
+app.delete('/api/delete/:id', routes);
 // Unkown URL / error handling
 app.get(/.*/, routes);
 
