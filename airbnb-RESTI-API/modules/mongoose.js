@@ -1,6 +1,6 @@
 require('dotenv').config();
 const Airbnb = require('./airbnbSchema');
-const service = require('./service');
+const service = require('./services');
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGO_URI, {
   dbName: 'sample_airbnb',
@@ -16,7 +16,6 @@ module.exports = {
   getData: function (query, callback) {
     const helper = service.queryHelper(query);
     Airbnb.paginate(helper.search, helper.options, function (err, results) {
-      console.log(err, results);
       callback(err, results);
     });
   },
@@ -24,7 +23,6 @@ module.exports = {
   findByID: function (query, callback) {
     Airbnb.findById(query, function (err, results) {
       results = service.docsHelper(results);
-      console.log(err, results);
       callback(err, results);
     });
   },
@@ -32,7 +30,6 @@ module.exports = {
   findKeyword: function (query, callback) {
     const helper = service.queryHelper(query);
     Airbnb.paginate(helper.search, helper.options, function (err, results) {
-      console.log(err, results);
       callback(err, results);
     });
   },
@@ -40,6 +37,7 @@ module.exports = {
   postData: function (query, callback) {
     var newAirbnb = new Airbnb({
       _id: mongoose.Types.ObjectId(),
+      bathrooms: query.bathrooms,
       listing_url: query.url,
       name: query.name,
       summary: query.summary,
@@ -60,7 +58,6 @@ module.exports = {
     });
     newAirbnb.save(function (err, results) {
       results = service.docsHelper(results);
-      console.log(err, results);
       callback(err, results);
     });
   },
@@ -91,7 +88,6 @@ module.exports = {
       { new: true },
       function (err, results) {
         results = service.docsHelper(results);
-        console.log(err, results);
         callback(err, results);
       }
     );

@@ -4,5 +4,4 @@ module.exports = {
   urlError:
     'Bad URL. Check API guide at https://github.com/tuuchen/R0314-MEVN/blob/master/airbnb-RESTI-API',
   successMsg: 'Success!',
-  maxPages: 60,
 };

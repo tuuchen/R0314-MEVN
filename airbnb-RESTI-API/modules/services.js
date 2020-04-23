@@ -1,11 +1,11 @@
 const messages = require('./messages');
-
 module.exports = {
   paramsHelper: function (req) {
     let data = {
       type: req.params.type,
       keyword: req.params.keyword,
       page: req.query.page,
+      perPage: req.query.perPage,
       orderBy: req.query.order,
       sort: req.query.sort,
       filter: req.query.filter,
@@ -32,22 +32,18 @@ module.exports = {
   resHelper: function (req, res, err, results) {
     if (err) {
       return res.status(500).json({ error: messages.internalError });
-    } else if (results === null || results == undefined) {
-      return res.status(200).json({ error: messages.noResultError });
     } else if (
-      (results.docs && results.docs.length === 0) ||
-      (results.docs && results.docs[0] === null) ||
+      results === null ||
+      results === undefined ||
       results.length === 0
     ) {
       return res.status(200).json({ error: messages.noResultError });
+    } else if (
+      (results.docs && results.docs.length === 0) ||
+      (results.docs && results.docs[0] === null)
+    ) {
+      return res.status(200).json({ error: messages.noResultError });
     } else {
-      if (results.totalPages > messages.maxPages) {
-        results.totalPages = messages.maxPages;
-      }
-      if (req.query.page == messages.maxPages) {
-        results.hasNextPage = false;
-        results.nextPage = null;
-      }
       res.statusMessage = messages.successMsg;
       return res.status(200).json(results);
     }
@@ -57,6 +53,9 @@ module.exports = {
     var sortValue = 'review_scores.review_scores_rating';
     var sortOrder = -1;
     var search = {};
+    if (query.perPage) {
+      maxPerPage = query.perPage;
+    }
     if (query.sort) {
       sortValue = query.sort;
     }

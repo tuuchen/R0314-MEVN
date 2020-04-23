@@ -1,19 +1,15 @@
 const mongo = require('./mongoose');
-const service = require('./service');
+const service = require('./services');
 const messages = require('./messages');
 
 module.exports = {
   // Get all
   getAll: function (req, res) {
-    if (req.query.page > messages.maxPages) {
-      res.status(200).json({ error: messages.noResultError });
-    } else {
-      const data = service.paramsHelper(req);
-      data.all = true;
-      mongo.getData(data, function (err, results) {
-        return service.resHelper(req, res, err, results);
-      });
-    }
+    const data = service.paramsHelper(req);
+    data.all = true;
+    mongo.getData(data, function (err, results) {
+      return service.resHelper(req, res, err, results);
+    });
   },
   // Search by ID
   searchID: function (req, res) {
@@ -24,14 +20,10 @@ module.exports = {
   },
   // Search by keyword
   searchKeyword: function (req, res) {
-    if (req.query.page > messages.maxPages) {
-      res.status(200).json({ error: messages.noResultError });
-    } else {
-      const data = service.paramsHelper(req);
-      mongo.findKeyword(data, function (err, results) {
-        return service.resHelper(req, res, err, results);
-      });
-    }
+    const data = service.paramsHelper(req);
+    mongo.findKeyword(data, function (err, results) {
+      return service.resHelper(req, res, err, results);
+    });
   },
   // Add
   addAirbnb: function (req, res) {

@@ -24,13 +24,13 @@ const airbnbSchema = new mongoose.Schema(
     bedrooms: { type: Number },
     beds: { type: Number },
     number_of_reviews: { type: Number },
-    bathrooms: { type: Number },
+    bathrooms: { type: mongoose.Types.Decimal128 },
     amenities: [{ type: String }],
-    price: { type: Number },
+    price: { type: mongoose.Types.Decimal128 },
     security_deposit: { type: Number },
-    cleaning_fee: { type: Number },
-    extra_people: { type: Number },
-    guests_included: { type: Number },
+    cleaning_fee: { type: mongoose.Types.Decimal128 },
+    extra_people: { type: mongoose.Types.Decimal128 },
+    guests_included: { type: mongoose.Types.Decimal128 },
     images: {
       thumbnail_url: { type: String },
       medium_url: { type: String },
@@ -62,11 +62,11 @@ const airbnbSchema = new mongoose.Schema(
       market: { type: String },
       country: { type: String },
       country_code: { type: String },
-      /* location: {
-        type: { type: String },
-        coordinates: [{ type: Number }, { type: Number }],
+      location: {
+        type: { type: String, enum: ['Point'], default: undefined }, // default: 'Point'
+        coordinates: { type: [], default: undefined }, // type: [Number], default: [24.9384, 60.1699]
         is_location_exact: { type: Boolean },
-      }, */
+      },
     },
     availability: {
       availability_30: { type: Number },
