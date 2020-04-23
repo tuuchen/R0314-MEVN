@@ -7,18 +7,19 @@ app.use(bodyParser.urlencoded({
     extended: true
   }));
 
-// List all
-app.get('/api/all', routes);
-// Search ID
-app.get('/api/id/:id', routes);
-// Search keyword
-app.get('/api/query/:type/:keyword', routes);
+/* I don't really need more paths at the moment
+because I can construct functionality with route queries etc. */
+
+// Get data 
+app.get('/api/query/', routes);
+// Get by ID
+app.get('/api/id/', routes);
 // Add
 app.post('/api/add', routes);
 // Edit
 app.put('/api/edit', routes);
 // Delete
-app.delete('/api/delete/:id', routes);
+app.delete('/api/delete/', routes);
 // Unkown URL / error handling
 app.get(/.*/, routes);
 

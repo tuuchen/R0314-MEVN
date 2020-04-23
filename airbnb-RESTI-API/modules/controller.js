@@ -5,9 +5,10 @@ const messages = require('./messages');
 module.exports = {
   // Get all
   getAll: function (req, res) {
+    // send req data into paramsHelper to construct a query
     const data = service.paramsHelper(req);
-    data.all = true;
     mongo.getData(data, function (err, results) {
+      // construct results / or errors with resHelper
       return service.resHelper(req, res, err, results);
     });
   },
@@ -55,7 +56,7 @@ module.exports = {
   },
   // Redirect to query /all
   redirectToAll: function (req, res) {
-    res.redirect('/api/all');
+    res.redirect('/api/query/all');
   },
   // Uknown path: /* Do something here */
   unkownUrl: function (req, res) {

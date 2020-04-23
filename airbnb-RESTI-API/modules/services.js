@@ -1,7 +1,9 @@
 const messages = require('./messages');
 module.exports = {
+  // sort route params / queries into one object
   paramsHelper: function (req) {
-    let data = {
+    let obj = {
+      all: req.params.all,
       type: req.params.type,
       keyword: req.params.keyword,
       page: req.query.page,
@@ -11,12 +13,14 @@ module.exports = {
       filter: req.query.filter,
       minVal: req.query.min,
       maxVal: req.query.max,
-      all: false,
     };
-    return data;
+    // clean null values
+    Object.keys(obj).forEach((key) => obj[key] == null && delete obj[key]);
+    return obj;
   },
+  // reconstruct object for consistency
   docsHelper: function (results) {
-    var data = {
+    var obj = {
       docs: [results],
       totalDocs: null,
       totalPages: null,
@@ -27,8 +31,9 @@ module.exports = {
       prevPage: null,
       nextPage: null,
     };
-    return data;
+    return obj;
   },
+  // return results, status codes and errors
   resHelper: function (req, res, err, results) {
     if (err) {
       return res.status(500).json({ error: messages.internalError });
@@ -48,20 +53,9 @@ module.exports = {
       return res.status(200).json(results);
     }
   },
-  queryHelper: function (query) {
-    var maxPerPage = 20;
-    var sortValue = 'review_scores.review_scores_rating';
-    var sortOrder = -1;
+  // construct search -object based on route params / queries
+  searchHelper: function (query) {
     var search = {};
-    if (query.perPage) {
-      maxPerPage = query.perPage;
-    }
-    if (query.sort) {
-      sortValue = query.sort;
-    }
-    if (query.orderBy === 'asc') {
-      sortOrder = 1;
-    }
     if (!isNaN(query.keyword)) {
       query.keyword = parseInt(query.keyword);
     } else {
@@ -75,19 +69,33 @@ module.exports = {
           $lte: query.maxVal || 9999999999999,
         },
       };
-    } else if (query.all && query.filter) {
+    } else if (query.all === 'all' && query.filter) {
       search = {
         [query.filter]: {
           $gte: query.minVal || 0,
           $lte: query.maxVal || 9999999999999,
         },
       };
-    } else if (query.all) {
-      search = {};
-    } else {
+    } else if (query.all !== 'all') {
       search = {
         [query.type]: query.keyword,
       };
+    }
+    return search;
+  },
+  // construct options -object based on route params / queries
+  optionsHelper: function (query) {
+    var maxPerPage = 20;
+    var sortValue = 'review_scores.review_scores_rating';
+    var sortOrder = -1;
+    if (query.perPage) {
+      maxPerPage = query.perPage;
+    }
+    if (query.sort) {
+      sortValue = query.sort;
+    }
+    if (query.orderBy === 'asc') {
+      sortOrder = 1;
     }
     var options = {
       sort: { [sortValue]: sortOrder },
@@ -95,6 +103,12 @@ module.exports = {
       limit: maxPerPage,
       lean: true,
     };
+    return options;
+  },
+  // construct search -object and options -object for return
+  queryHelper: function (query) {
+    search = this.searchHelper(query);
+    options = this.optionsHelper(query);
     return {
       search: search,
       options: options,

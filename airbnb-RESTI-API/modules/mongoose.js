@@ -14,6 +14,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 module.exports = {
   // Get all
   getData: function (query, callback) {
+    // construct query with queryHelper
     const helper = service.queryHelper(query);
     Airbnb.paginate(helper.search, helper.options, function (err, results) {
       callback(err, results);
