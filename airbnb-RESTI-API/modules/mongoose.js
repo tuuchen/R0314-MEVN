@@ -36,26 +36,9 @@ module.exports = {
   },
   // Add
   postData: function (query, callback) {
-    var newAirbnb = new Airbnb({
-      _id: mongoose.Types.ObjectId(),
-      listing_url: query.url,
-      name: query.name,
-      summary: query.summary,
-      space: query.space,
-      description: query.description,
-      neighborhood_overview: query.neighborhood,
-      notes: query.notes,
-      transit: query.transit,
-      access: query.access,
-      interaction: query.interaction,
-      house_rules: query.rules,
-      property_type: query.property,
-      room_type: query.room,
-      bed_type: query.bed,
-      minimum_nights: query.min,
-      maximum_nights: query.max,
-      cancellation_policy: query.policy,
-    });
+    var newData = service.newDataHelper(query);
+    newData._id = mongoose.Types.ObjectId();
+    var newAirbnb = new Airbnb(newData);
     newAirbnb.save(function (err, results) {
       results = service.docsHelper(results);
       callback(err, results);
@@ -63,30 +46,13 @@ module.exports = {
   },
   // Edit
   editData: function (query, callback) {
-    var editAirbnb = {
-      listing_url: query.url,
-      name: query.name,
-      summary: query.summary,
-      space: query.space,
-      description: query.description,
-      neighborhood_overview: query.neighborhood,
-      notes: query.notes,
-      transit: query.transit,
-      access: query.access,
-      interaction: query.interaction,
-      house_rules: query.rules,
-      property_type: query.property,
-      room_type: query.room,
-      bed_type: query.bed,
-      minimum_nights: query.min,
-      maximum_nights: query.max,
-      cancellation_policy: query.policy,
-    };
+    var newData = service.newDataHelper(query);
     Airbnb.findOneAndUpdate(
       { _id: query._id },
-      editAirbnb,
-      { new: true },
+      newData,
+      { new: true, omitUndefined: true },
       function (err, results) {
+        console.log(err, results);
         results = service.docsHelper(results);
         callback(err, results);
       }

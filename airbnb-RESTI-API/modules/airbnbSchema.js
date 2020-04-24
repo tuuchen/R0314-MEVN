@@ -25,7 +25,7 @@ const airbnbSchema = new mongoose.Schema(
     beds: { type: Number },
     number_of_reviews: { type: Number },
     bathrooms: { type: mongoose.Types.Decimal128 },
-    amenities: [{ type: String }],
+    amenities: { type: [], default: undefined },
     price: { type: mongoose.Types.Decimal128 },
     security_deposit: { type: Number },
     cleaning_fee: { type: mongoose.Types.Decimal128 },
@@ -53,7 +53,7 @@ const airbnbSchema = new mongoose.Schema(
       host_identity_verified: { type: Boolean },
       host_listings_count: { type: Number },
       host_total_listings_count: { type: Number },
-      host_verifications: [{ type: String }],
+      host_verifications: { type: [], default: undefined },
     },
     address: {
       street: { type: String },

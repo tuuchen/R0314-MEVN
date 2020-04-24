@@ -11,9 +11,9 @@ app.use(bodyParser.urlencoded({
 because I can construct functionality with route queries etc. */
 
 // Get data 
-app.get('/api/query/', routes);
+app.get('/api/query', routes);
 // Get by ID
-app.get('/api/id/', routes);
+app.get('/api/id', routes);
 // Add
 app.post('/api/add', routes);
 // Edit
