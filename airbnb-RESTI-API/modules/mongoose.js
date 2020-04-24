@@ -52,7 +52,6 @@ module.exports = {
       newData,
       { new: true, omitUndefined: true },
       function (err, results) {
-        console.log(err, results);
         results = service.docsHelper(results);
         callback(err, results);
       }
