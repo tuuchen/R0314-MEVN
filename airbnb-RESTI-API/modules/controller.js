@@ -1,6 +1,6 @@
 const mongo = require('./mongoose');
 const service = require('./services');
-const messages = require('./messages');
+const msg = require('./messages');
 
 module.exports = {
   // Get all
@@ -44,14 +44,7 @@ module.exports = {
   deleteAirbnb: function (req, res) {
     let id = req.params.id;
     mongo.deleteData(id, function (results) {
-      if (results === 404) {
-        res.status(404).json({ error: messages.noResultError });
-      } else if (results === 500) {
-        res.status(500).json({ error: messages.internalError });
-      } else {
-        res.statusMessage = messages.successMsg;
-        res.status(200).json({ ok: messages.successMsg });
-      }
+      return service.resHelper(req, res, err, results);
     });
   },
   // Redirect to query /all
@@ -60,6 +53,6 @@ module.exports = {
   },
   // Uknown path: /* Do something here */
   unkownUrl: function (req, res) {
-    res.status(200).json({ error: messages.urlError });
+    res.status(404).json(msg.urlError);
   },
 };

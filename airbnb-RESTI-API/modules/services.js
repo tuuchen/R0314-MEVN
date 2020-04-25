@@ -1,4 +1,4 @@
-const messages = require('./messages');
+const msg = require('./messages');
 module.exports = {
   // sort route params / queries into one object
   paramsHelper: function (req) {
@@ -35,21 +35,22 @@ module.exports = {
   },
   // return results, status codes and errors
   resHelper: function (req, res, err, results) {
-    if (err) {
-      return res.status(500).json({ error: messages.internalError });
+    if (err || results === 500) {
+      return res.status(500).json(msg.internalError);
     } else if (
+      results === 404 ||
       results === null ||
       results === undefined ||
       results.length === 0
     ) {
-      return res.status(200).json({ error: messages.noResultError });
+      return res.status(404).json(msg.noResult);
     } else if (
       (results.docs && results.docs.length === 0) ||
       (results.docs && results.docs[0] === null)
     ) {
-      return res.status(200).json({ error: messages.noResultError });
+      return res.status(404).json(msg.noResult);
     } else {
-      res.statusMessage = messages.successMsg;
+      res.statusMessage = msg.success.message;
       return res.status(200).json(results);
     }
   },
