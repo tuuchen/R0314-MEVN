@@ -105,8 +105,7 @@ module.exports = {
         [query.type]: query.keyword,
       };
     }
-    
-    console.log(search);
+
     return search;
   },
   // construct options -object based on route params / queries

@@ -55,7 +55,7 @@ module.exports = {
   },
   // Redirect to query /all
   redirectToAll: function (req, res) {
-    res.redirect('/api/query/all');
+    res.redirect('/api/country/all');
   },
   // Uknown path: /* Do something here */
   unkownUrl: function (req, res) {

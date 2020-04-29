@@ -14,11 +14,11 @@
 
 ### Simple API-call:
 
-- /api/query/all + options
+- /api/country/all
 
 ### Detailed results:
 
-- /api/query/`[key]`/`[value]` + options.
+- /api/country/`[country]`/`[key]`/`[value]` + options.
 
 Example result:
 
