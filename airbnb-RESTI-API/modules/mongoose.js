@@ -31,6 +31,7 @@ module.exports = {
   findKeyword: function (query, callback) {
     const helper = service.queryHelper(query);
     Airbnb.paginate(helper.search, helper.options, function (err, results) {
+      console.log(err, results)
       callback(err, results);
     });
   },

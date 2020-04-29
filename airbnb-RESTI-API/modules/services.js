@@ -3,7 +3,7 @@ module.exports = {
   // sort route params / queries into one object
   paramsHelper: function (req) {
     let obj = {
-      all: req.params.all,
+      country: req.params.country,
       type: req.params.type,
       keyword: req.params.keyword,
       page: req.query.page,
@@ -35,10 +35,9 @@ module.exports = {
   },
   // return results, status codes and errors
   resHelper: function (req, res, err, results) {
-    if (err || results === 500) {
+    if (err) {
       return res.status(500).json(msg.internalError);
     } else if (
-      results === 404 ||
       results === null ||
       results === undefined ||
       results.length === 0
@@ -57,12 +56,14 @@ module.exports = {
   // construct search -object based on route params / queries
   searchHelper: function (query) {
     var search = {};
-    if (!isNaN(query.keyword)) {
-      query.keyword = parseInt(query.keyword);
-    } else {
-      query.keyword = new RegExp(query.keyword, 'i');
+
+    if (query.keyword) {
+      query.keyword = !isNaN(query.keyword)
+        ? (query.keyword = parseInt(query.keyword))
+        : (query.keyword = new RegExp(query.keyword, 'i'));
     }
-    if (query.filter && !query.all) {
+
+    if (query.country === 'all' && query.keyword && query.filter) {
       search = {
         [query.type]: query.keyword,
         [query.filter]: {
@@ -70,18 +71,42 @@ module.exports = {
           $lte: query.maxVal || 9999999999999,
         },
       };
-    } else if (query.all === 'all' && query.filter) {
+    } else if (query.country === 'all' && query.filter) {
       search = {
         [query.filter]: {
           $gte: query.minVal || 0,
           $lte: query.maxVal || 9999999999999,
         },
       };
-    } else if (query.all !== 'all') {
+    } else if (query.country === 'all' && query.keyword && !query.filter) {
       search = {
         [query.type]: query.keyword,
       };
+    } else if (query.country !== 'all' && query.keyword && query.filter) {
+      search = {
+        'address.country': query.country,
+        [query.type]: query.keyword,
+        [query.filter]: {
+          $gte: query.minVal || 0,
+          $lte: query.maxVal || 9999999999999,
+        },
+      };
+    } else if (query.country !== 'all' && query.filter) {
+      search = {
+        'address.country': query.country,
+        [query.filter]: {
+          $gte: query.minVal || 0,
+          $lte: query.maxVal || 9999999999999,
+        },
+      };
+    } else if (query.country !== 'all' && !query.keyword && !query.filter) {
+      search = {
+        'address.country': query.country,
+        [query.type]: query.keyword,
+      };
     }
+    
+    console.log(search);
     return search;
   },
   // construct options -object based on route params / queries

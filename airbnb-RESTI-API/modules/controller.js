@@ -44,7 +44,13 @@ module.exports = {
   deleteAirbnb: function (req, res) {
     let id = req.params.id;
     mongo.deleteData(id, function (results) {
-      return service.resHelper(req, res, err, results);
+      if (results === 404) {
+        res.status(404).json(msg.noResult);
+      } else if (results === 500) {
+        res.status(500).json(msg.internalError);
+      } else {
+        res.status(200).json(msg.success);
+      }
     });
   },
   // Redirect to query /all

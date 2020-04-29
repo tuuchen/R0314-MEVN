@@ -185,33 +185,33 @@ Example result:
 
 ### Get all results and paginate
 
-- /api/query/all`?page=1`
+- /api/country/all`?page=1`
 
 ### Get all results and paginate, sort by price and order by price ascending
 
-- /api/query/all`?sort=price&order=asc?page=1`
+- /api/country/all`?sort=price&order=asc?page=1`
 
 ### Get all results, paginate and filter by price
 
-- /api/query/all`?filter=price&max=400&page=1`
+- /api/country/all`?filter=price&max=400&page=1`
 
 #
 
 ### Get results and paginate
 
-- /api/query/`address.country`/`australia?page=1`
+- /api/country/`australia?page=1`
 
 ### Get results and paginate, filter by max price 100€
 
-- /api/query/`address.country`/`australia?filter=price&max=100&page=1`
+- /api/country/`australia?filter=price&max=100&page=1`
 
 ### Get results and paginate, sort by price, order by price ascending
 
-- /api/query/`name`/`villa?sort=price&order=asc&page=1`
+- /api/country/`australia/name/villa?sort=price&order=asc&page=1`
 
 ### Get results and paginate, sort by price, filter by price range, order by price ascending
 
-- /api/query/`name`/`villa?sort=price&filter=price&min=100&max=500&order=asc&page=1`
+- /api/country/`australia/name/villa?sort=price&filter=price&min=100&max=500&order=asc&page=1`
 
 #
 
