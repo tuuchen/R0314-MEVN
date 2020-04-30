@@ -8,9 +8,7 @@ import ReactStars from 'react-stars';
 class Results extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showApartment: '',
-    };
+    this.state = {};
   }
 
   render() {
@@ -19,10 +17,7 @@ class Results extends React.Component {
         <div>
           <Accordion>
             {this.props.searchResults.docs.map((item) => (
-              <Card
-                key={item._id}
-                onClick={() => this.setState({ showApartment: item._id })}
-              >
+              <Card key={item._id}>
                 <Card.Header>
                   <Row>
                     <Col md>
@@ -57,9 +52,7 @@ class Results extends React.Component {
                 </Card.Header>
                 <Accordion.Collapse eventKey={item._id}>
                   <Card.Body>
-                    {this.state.showApartment !== '' ? (
-                      <Aparment id={item._id} showImg={true} />
-                    ) : null}
+                    <Aparment id={item._id} showImg={true} />
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>
