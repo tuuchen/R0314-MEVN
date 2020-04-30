@@ -99,7 +99,7 @@ module.exports = {
           $lte: query.maxVal || 9999999999999,
         },
       };
-    } else if (query.country !== 'all' && !query.keyword && !query.filter) {
+    } else if (query.country !== 'all' && query.keyword && !query.filter) {
       search = {
         'address.country': query.country,
         [query.type]: query.keyword,
@@ -110,7 +110,7 @@ module.exports = {
   },
   // construct options -object based on route params / queries
   optionsHelper: function (query) {
-    var maxPerPage = 20;
+    var maxPerPage = 1;
     var sortValue = 'review_scores.review_scores_rating';
     var sortOrder = -1;
     if (query.perPage) {
