@@ -104,6 +104,10 @@ module.exports = {
         'address.country': query.country,
         [query.type]: query.keyword,
       };
+    } else if (query.country !== 'all' && !query.keyword && !query.filter) {
+      search = {
+        'address.country': query.country,
+      };
     }
 
     return search;
