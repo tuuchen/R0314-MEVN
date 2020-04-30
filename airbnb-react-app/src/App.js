@@ -3,9 +3,9 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Tabs, Tab, Container } from 'react-bootstrap';
 import { HouseDoor, Search, FolderPlus } from 'react-bootstrap-icons';
-import Home from './components/Home';
-import Discover from './components/Discover';
-import Add from './components/Add';
+import Home from './pages/Home';
+import Discover from './pages/Discover';
+import Add from './pages/Add';
 
 class App extends React.Component {
   constructor(props) {

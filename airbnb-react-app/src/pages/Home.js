@@ -1,5 +1,5 @@
 import React from 'react';
-import bgimage from '../1.png';
+import bgimage from '../airbnb-large.png';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card } from 'react-bootstrap';

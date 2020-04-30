@@ -1,11 +1,11 @@
 import React from 'react';
 import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import bgimage from '../2.png';
+import bgimage from '../airbnb-banner.png';
 import { Container, Card } from 'react-bootstrap';
-import Results from './Results';
-import Paginate from './Paginate';
-import SearchFrom from './SearchForm';
+import ResultsList from '../components/ResultsList';
+import Paginate from '../components/Paginate';
+import SearchFrom from '../components/SearchForm';
 
 class Discover extends React.Component {
   constructor(props) {
@@ -41,19 +41,13 @@ class Discover extends React.Component {
   }
 
   getResults(page) {
-    if (!page) {
-      page = 1;
-    }
-    var url;
+    if (!page) page = 1;
+    var url = 'https://airbnb-restapi.herokuapp.com/api/country/';
+    var options = '';
     if (this.state.searchWord === '') {
-      url =
-        'https://airbnb-restapi.herokuapp.com/api/country/' +
-        this.state.searchCountry +
-        '?page=' +
-        page;
+      options += this.state.searchCountry + '?page=' + page;
     } else {
-      url =
-        'https://airbnb-restapi.herokuapp.com/api/country/' +
+      options +=
         this.state.searchCountry +
         '/' +
         this.state.searchOption +
@@ -62,14 +56,6 @@ class Discover extends React.Component {
         '?page=' +
         page;
     }
-
-    url += this.getOptions();
-    console.log(url);
-    this.doFetch(url);
-  }
-
-  getOptions() {
-    var options = '';
     if (this.state.max > 0) {
       options += '&filter=price&max=' + this.state.max;
     }
@@ -79,7 +65,9 @@ class Discover extends React.Component {
     if (this.state.sortByPrice) {
       options += '&sort=price';
     }
-    return options;
+    url += options;
+    console.log(url);
+    this.doFetch(url);
   }
 
   async doFetch(url) {
@@ -120,7 +108,7 @@ class Discover extends React.Component {
             </Container>
           </Card.Body>
         </Card>
-        <Results searchResults={this.state.searchResults} />
+        <ResultsList searchResults={this.state.searchResults} />
         <Paginate
           searchResults={this.state.searchResults}
           paginate={this.paginate}
