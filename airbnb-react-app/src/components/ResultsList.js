@@ -58,7 +58,7 @@ class Results extends React.Component {
                 <Accordion.Collapse eventKey={item._id}>
                   <Card.Body>
                     {this.state.showApartment !== '' ? (
-                      <Aparment id={this.state.showApartment} showImg={true} />
+                      <Aparment id={item._id} showImg={true} />
                     ) : null}
                   </Card.Body>
                 </Accordion.Collapse>

@@ -17,6 +17,7 @@ class Apartments extends React.Component {
     super(props);
     this.state = {
       apartmentPicture: '',
+      description: '',
       didLoad: false,
     };
   }
@@ -46,6 +47,7 @@ class Apartments extends React.Component {
           if (response.images) {
             this.setState({
               apartmentPicture: response.images.picture_url,
+              description: response.description,
             });
           }
         });
@@ -101,13 +103,12 @@ class Apartments extends React.Component {
               {img}
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <div>
-                <h4>Something here</h4>
-              </div>
-            </Col>
-          </Row>
+          <Col>
+            <div>
+              <h4>Something here</h4>
+              <p>{this.state.description}</p>
+            </div>
+          </Col>
         </Row>
         <Row>
           <Col>
