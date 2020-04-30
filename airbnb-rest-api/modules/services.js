@@ -110,7 +110,7 @@ module.exports = {
   },
   // construct options -object based on route params / queries
   optionsHelper: function (query) {
-    var maxPerPage = 1;
+    var maxPerPage = 20;
     var sortValue = 'review_scores.review_scores_rating';
     var sortOrder = -1;
     if (query.perPage) {
