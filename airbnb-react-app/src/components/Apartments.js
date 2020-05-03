@@ -4,11 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   Container,
   Image,
-  Spinner,
   Row,
   Col,
-  Accordion,
-  Card,
   Button,
 } from 'react-bootstrap';
 
@@ -16,8 +13,8 @@ class Apartments extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      data: [],
       apartmentPicture: '',
-      description: '',
       didLoad: false,
     };
   }
@@ -35,19 +32,19 @@ class Apartments extends React.Component {
 
   doFetch() {
     var url = 'https://airbnb-restapi.herokuapp.com/api/id/' + this.props.id;
-   // console.log(url);
+    console.log(url);
     fetch(url)
       .then((response) => {
         if (response.status !== 200) {
           return;
         }
         response.json().then((data) => {
-        //  console.log(data.docs[0]);
+          console.log(data.docs[0]);
           response = data.docs[0];
           if (response.images) {
             this.setState({
               apartmentPicture: response.images.picture_url,
-              description: response.description,
+              data: response,
             });
           }
         });
@@ -69,16 +66,24 @@ class Apartments extends React.Component {
     });
   };
 
+  showDetails(url) {
+    window.open(url);
+  }
+
   render() {
+    var str = '';
+    if (this.state.data.amenities) {
+      this.state.data.amenities.map((item) => {
+        str += item + ', ';
+      });
+      str = str.replace(/,\s*$/, '.');
+    }
+    var amenities = <div>{str}</div>;
+
     var img;
     if (this.props.showImg) {
       img = (
         <div className="img-wrap">
-          {this.state.didLoad === false && (
-            <div className="text-center mt-5">
-              <Spinner animation="border" />
-            </div>
-          )}
           <Image
             src={this.state.apartmentPicture}
             onLoad={this.onLoad}
@@ -93,39 +98,37 @@ class Apartments extends React.Component {
     }
 
     return (
-      <Container>
+      <Container fluid>
         <Row>
-          <Row style={{ minWidth: '70%', minHeight: '25rem' }}>
-            <Col md={10}>
-              <div>
-                <h4>Something here</h4>
-              </div>
-              {img}
-            </Col>
-          </Row>
-          <Col>
-            <div>
-              <h4>Something here</h4>
-              <p>{this.state.description}</p>
-            </div>
+          <Col className="mt-3" lg={6}>
+            {img}
+          </Col>
+          <Col className="mt-3">
+            <Row>
+              <Col>
+                <h5>{this.state.data.room_type}</h5>
+              </Col>
+              <Col>
+                {this.state.data.address && (
+                  <h5>{this.state.data.address.government_area}</h5>
+                )}
+              </Col>
+            </Row>
+            {str ? amenities : <p>No amenities listed.</p>}
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <Accordion>
-              <Card key="1">
-                <Card.Header>
-                  <Accordion.Toggle as={Button} variant="link" eventKey="1">
-                    Hello
-                  </Accordion.Toggle>
-                </Card.Header>
-                <Accordion.Collapse eventKey="1">
-                  <Card.Body></Card.Body>
-                </Accordion.Collapse>
-              </Card>
-            </Accordion>
-          </Col>
-        </Row>
+        <br />
+        <h5>Description</h5>
+        <p>{this.state.data.description}</p>
+        <div className="d-flex justify-content-center">
+          <Button
+            onClick={() => this.showDetails(this.state.data.listing_url)}
+            variant="outline-secondary"
+            className="d-flex justify-content-center"
+          >
+            Reserve
+          </Button>
+        </div>
       </Container>
     );
   }

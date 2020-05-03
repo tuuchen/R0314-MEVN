@@ -27,9 +27,6 @@ class Results extends React.Component {
                         eventKey={item._id}
                       >
                         {item.name}
-                        {/*    {item.address ? (
-                          <div className="mt-2">{item.address.country}</div>
-                        ) : null}  */}
                       </Accordion.Toggle>
                     </Col>
                     <Col className="d-flex justify-content-end mx-5">

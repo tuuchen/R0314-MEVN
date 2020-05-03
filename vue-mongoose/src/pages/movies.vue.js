@@ -1,7 +1,7 @@
 var Movies = Vue.component('Movies', {
 	template: `<div>
 	<h1 id="title" 
-	style="text-align: center">MongoDB movie finder</h1>
+	style="text-align: center">Mongoose movie finder</h1>
 	<div>
 	<b-input-group prepend="Movie title" class="my-5">
      <b-form-input v-model="input" @keyup.enter="getData(input)"></b-form-input>

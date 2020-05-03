@@ -22,7 +22,9 @@ class Paginate extends React.Component {
               <Col></Col>
               <Col>
                 <Pagination>
-                  <Pagination.First onClick={() => this.setPage(1)} />
+                  {this.props.searchResults.prevPage && (
+                    <Pagination.First onClick={() => this.setPage(1)} />
+                  )}
                   {this.props.searchResults.prevPage && (
                     <Pagination.Item
                       onClick={() =>

@@ -2,10 +2,9 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Tabs, Tab, Container } from 'react-bootstrap';
-import { HouseDoor, Search, FolderPlus } from 'react-bootstrap-icons';
+import { HouseDoor, Search } from 'react-bootstrap-icons';
 import Home from './pages/Home';
 import Discover from './pages/Discover';
-import Add from './pages/Add';
 
 class App extends React.Component {
   constructor(props) {
@@ -40,19 +39,6 @@ class App extends React.Component {
             }
           >
             <Discover />
-          </Tab>
-          <Tab
-            disabled
-            className="mt-3"
-            eventKey="add"
-            title={
-              <span>
-                <FolderPlus />
-                <span style={{ margin: '1em' }}>Add</span>
-              </span>
-            }
-          >
-            <Add />
           </Tab>
         </Tabs>
       </Container>
