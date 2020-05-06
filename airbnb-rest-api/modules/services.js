@@ -1,7 +1,7 @@
 const msg = require('./messages');
 module.exports = {
   // sort route params / queries into one object
-  paramsHelper: function (req) {
+  urlParams: function (req) {
     let obj = {
       country: req.params.country,
       type: req.params.type,
@@ -18,8 +18,8 @@ module.exports = {
     Object.keys(obj).forEach((key) => obj[key] == null && delete obj[key]);
     return obj;
   },
-  // reconstruct object for consistency
-  docsHelper: function (results) {
+  // paginate results
+  paginate: function (results) {
     var obj = {
       docs: [results],
       totalDocs: null,
@@ -34,7 +34,7 @@ module.exports = {
     return obj;
   },
   // return results, status codes and errors
-  resHelper: function (req, res, err, results) {
+  validateResponse: function (res, err, results) {
     if (err) {
       return res.status(500).json(msg.internalError);
     } else if (
@@ -54,7 +54,7 @@ module.exports = {
     }
   },
   // construct search -object based on route params / queries
-  searchHelper: function (query) {
+  getSearch: function (query) {
     var search = {};
 
     if (query.keyword) {
@@ -113,7 +113,7 @@ module.exports = {
     return search;
   },
   // construct options -object based on route params / queries
-  optionsHelper: function (query) {
+  getOptions: function (query) {
     var maxPerPage = 20;
     var sortValue = 'review_scores.review_scores_rating';
     var sortOrder = -1;
@@ -135,16 +135,16 @@ module.exports = {
     return options;
   },
   // construct search -object and options -object for return
-  queryHelper: function (query) {
-    search = this.searchHelper(query);
-    options = this.optionsHelper(query);
+  getQuery: function (query) {
+    search = this.getSearch(query);
+    options = this.getOptions(query);
     return {
       search: search,
       options: options,
     };
   },
   // construct object for new data
-  newDataHelper: function (query) {
+  newObject: function (query) {
     let obj = {
       listing_url: query.listing_url,
       name: query.name,

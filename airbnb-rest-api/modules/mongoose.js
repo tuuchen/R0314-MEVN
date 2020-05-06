@@ -14,46 +14,45 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 module.exports = {
   // Get all
   getData: function (query, callback) {
-    // construct query with queryHelper
-    const helper = service.queryHelper(query);
-    Airbnb.paginate(helper.search, helper.options, function (err, results) {
+    // construct query
+    const obj = service.getQuery(query);
+    Airbnb.paginate(obj.search, obj.options, function (err, results) {
       callback(err, results);
     });
   },
   // Search by ID
   findByID: function (query, callback) {
     Airbnb.findById(query, function (err, results) {
-      results = service.docsHelper(results);
+      results = service.paginate(results);
       callback(err, results);
     });
   },
   // Search by keyword
   findKeyword: function (query, callback) {
-    const helper = service.queryHelper(query);
-    Airbnb.paginate(helper.search, helper.options, function (err, results) {
-      console.log(err, results)
+    const obj = service.getQuery(query);
+    Airbnb.paginate(obj.search, obj.options, function (err, results) {
       callback(err, results);
     });
   },
   // Add
   postData: function (query, callback) {
-    var newData = service.newDataHelper(query);
+    var newData = service.newObject(query);
     newData._id = mongoose.Types.ObjectId();
     var newAirbnb = new Airbnb(newData);
     newAirbnb.save(function (err, results) {
-      results = service.docsHelper(results);
+      results = service.paginate(results);
       callback(err, results);
     });
   },
   // Edit
   editData: function (query, callback) {
-    var newData = service.newDataHelper(query);
+    var newData = service.newObject(query);
     Airbnb.findOneAndUpdate(
       { _id: query._id },
       newData,
       { new: true, omitUndefined: true },
       function (err, results) {
-        results = service.docsHelper(results);
+        results = service.paginate(results);
         callback(err, results);
       }
     );

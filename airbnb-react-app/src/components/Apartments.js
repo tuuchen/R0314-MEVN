@@ -32,14 +32,12 @@ class Apartments extends React.Component {
 
   doFetch() {
     var url = 'https://airbnb-restapi.herokuapp.com/api/id/' + this.props.id;
-    console.log(url);
     fetch(url)
       .then((response) => {
         if (response.status !== 200) {
           return;
         }
         response.json().then((data) => {
-          console.log(data.docs[0]);
           response = data.docs[0];
           if (response.images) {
             this.setState({
