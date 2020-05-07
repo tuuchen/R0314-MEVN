@@ -66,6 +66,7 @@ class Discover extends React.Component {
       options += '&sort=price';
     }
     url += options;
+    console.log(url);
     this.doFetch(url);
   }
 

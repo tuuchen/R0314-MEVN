@@ -54,7 +54,6 @@ class SearchForm extends React.Component {
   }
 
   handleChange(event) {
-    console.log(event.target.value);
     this.setState({ [event.target.name]: event.target.value });
   }
 
@@ -99,10 +98,10 @@ class SearchForm extends React.Component {
           e.preventDefault();
         }}
       >
-        <Row>
-          <Col>
+        <Row className="mt-5">
+          <Col lg={2} className="mt-2">
             <Form.Label>Select country:</Form.Label>
-            <InputGroup className="mt-2">
+            <InputGroup>
               <DropdownButton
                 as={InputGroup.Prepend}
                 variant="outline-secondary"
@@ -120,38 +119,40 @@ class SearchForm extends React.Component {
               </DropdownButton>
             </InputGroup>
           </Col>
-        </Row>
-        <Form.Label className="mt-3">Search for:</Form.Label>
-        <InputGroup className="mt-1">
-          <DropdownButton
-            as={InputGroup.Prepend}
-            variant="outline-secondary"
-            title={this.state.searchName}
-          >
-            {this.state.options.map((option, i) => (
-              <Dropdown.Item
-                key={i}
-                value={option.item}
-                onClick={() =>
-                  this.changeSearchValue(option.item, option.value)
-                }
+          <Col className="mt-2">
+            <Form.Label>Search for:</Form.Label>
+            <InputGroup>
+              <DropdownButton
+                as={InputGroup.Prepend}
+                variant="outline-secondary"
+                title={this.state.searchName}
               >
-                {option.item}
-              </Dropdown.Item>
-            ))}
-          </DropdownButton>
-          <FormControl
-            name="searchWord"
-            onChange={this.handleChange}
-            value={this.state.searchWord}
-            placeholder="(Optional)"
-          />
-          <InputGroup.Append>
-            <Button variant="outline-secondary" onClick={this.handleClick}>
-              Go!
-            </Button>
-          </InputGroup.Append>
-        </InputGroup>
+                {this.state.options.map((option, i) => (
+                  <Dropdown.Item
+                    key={i}
+                    value={option.item}
+                    onClick={() =>
+                      this.changeSearchValue(option.item, option.value)
+                    }
+                  >
+                    {option.item}
+                  </Dropdown.Item>
+                ))}
+              </DropdownButton>
+              <FormControl
+                name="searchWord"
+                onChange={this.handleChange}
+                value={this.state.searchWord}
+                placeholder="(Optional)"
+              />
+              <InputGroup.Append>
+                <Button variant="outline-secondary" onClick={this.handleClick}>
+                  Go!
+                </Button>
+              </InputGroup.Append>
+            </InputGroup>
+          </Col>
+        </Row>
         <Col className="mt-4">
           <Row>
             <Col>
